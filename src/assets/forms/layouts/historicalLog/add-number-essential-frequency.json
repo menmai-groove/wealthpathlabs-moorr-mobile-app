@@ -1,0 +1,68 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "date",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "required": true,
+          "visible": true,
+          "label": "screens.historicalLog.date",
+          "placeholder": "screens.historicalLog.date",
+          "dataType": "date",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.requiredDate"
+            }
+          ]
+        },
+        {
+          "id": "essentialAmount",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": false,
+          "dataType": "number",
+          "label": "forms.expense.essential",
+          "formatData": "currency",
+          "keyboardType": "numeric",
+          "maxValue": 100000000,
+          "placeholder": "",
+          "validation": []
+        },
+        {
+          "id": "discretionaryAmount",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": false,
+          "label": "forms.expense.discretionary",
+          "dataType": "number",
+          "keyboardType": "numeric",
+          "formatData": "currency",
+          "maxValue": 100000000,
+          "placeholder": "",
+          "validation": []
+        },
+        {
+          "id": "frequency",
+          "component": "dropdown",
+          "visible": true,
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "label": "screens.historicalLog.frequency",
+          "__placeholder": "historicalLog.historicalLog.frequency"
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

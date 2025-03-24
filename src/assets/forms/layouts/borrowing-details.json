@@ -1,0 +1,589 @@
+{
+  "layout": [
+    {
+      "id": "group-1",
+      "label": "",
+      "component": "",
+      "fields": [
+        {
+          "id": "cardName",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.borrowing.cardName",
+          "placeholder": "forms.borrowing.cardNamePlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "required": true,
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.borrowing.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "outstandingAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "outstandingBalance",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.borrowing.outstandingBalance",
+              "placeholder": "forms.borrowing.outstandingBalancePlaceholder",
+              "dataType": "number",
+              "formatData": "currency",
+              "maxValue": 10000000,
+              "validation": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "group-2",
+      "label": "forms.borrowing.details",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "borrowerAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "visible": true,
+              "label": "forms.borrowing.borrower",
+              "__placeholder": "forms.borrowing.ownershipPlaceholder",
+              "required": true,
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.borrowing.ownershipRequired"
+                }
+              ]
+            },
+            {
+              "id": "ownershipSplitPerson1",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.borrowing.ownershipSplit",
+              "placeholder": "forms.borrowing.ownershipSplitPlaceholder",
+              "dataType": "number",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "iconRight": "percent",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            },
+            {
+              "id": "ownershipSplitPerson2",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.borrowing.ownershipSplit",
+              "placeholder": "forms.borrowing.ownershipSplitPlaceholder",
+              "dataType": "number",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "iconRight": "percent",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            },
+            {
+              "id": "otherBorrowerPercentage",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.borrowing.otherBorrowerPercentage",
+              "placeholder": "forms.borrowing.otherBorrowerPercentagePlaceholder",
+              "dataType": "number",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "iconRight": "percent",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "primaryPurpose",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.borrowing.primaryPurpose",
+          "__placeholder": "forms.borrowing.primaryPurposePlaceholder",
+          "validation": []
+        }
+      ]
+    },
+    {
+      "id": "group-3",
+      "label": "forms.borrowing.productDetails",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "typeAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "loanType",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "visible": true,
+              "label": "forms.borrowing.loanType",
+              "__placeholder": "forms.borrowing.loanTypePlaceholder",
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "provider",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.borrowing.provider",
+          "__placeholder": "forms.borrowing.providerPlaceholder",
+          "validation": []
+        },
+        {
+          "id": "otherProvider",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.borrowing.otherProvider",
+          "placeholder": "forms.borrowing.otherProviderPlaceholder",
+          "dataType": "string",
+          "validation": []
+        },
+        {
+          "id": "accountNumber",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.borrowing.accountNumber",
+          "placeholder": "forms.borrowing.accountNumberPlaceholder",
+          "dataType": "number",
+          "validation": []
+        },
+        {
+          "id": "offsetsAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "offsetAccount",
+              "component": "dropdown",
+              "value": [],
+              "options": [],
+              "visible": true,
+              "multiple": true,
+              "label": "forms.borrowing.offsetAccount",
+              "__placeholder": "forms.borrowing.offsetAccountPlaceholder",
+              "validation": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "group-4",
+      "label": "forms.borrowing.purchaseDetails",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "originalAmount",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.borrowing.originalAmount",
+          "placeholder": "forms.borrowing.originalAmountPlaceholder",
+          "dataType": "number",
+          "formatData": "currency",
+          "maxValue": 10000000,
+          "validation": []
+        },
+        {
+          "id": "loanStartDate",
+          "component": "datepicker",
+          "formatData": "DD MMM YYYY",
+          "value": null,
+          "visible": true,
+          "label": "forms.borrowing.loanStartDate",
+          "placeholder": "forms.borrowing.loanStartDatePlaceholder",
+          "dataType": "date",
+          "validation": []
+        },
+        {
+          "id": "term",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.borrowing.term",
+          "__placeholder": "forms.borrowing.termPlaceholder",
+          "validation": []
+        },
+        {
+          "id": "loanExpiryDate",
+          "component": "datepicker",
+          "formatData": "DD MMM YYYY",
+          "value": null,
+          "visible": true,
+          "disable": true,
+          "label": "forms.borrowing.loanExpiryDate",
+          "placeholder": "forms.borrowing.loanExpiryDatePlaceholder",
+          "dataType": "date",
+          "validation": []
+        },
+        {
+          "id": "fixedTerm",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.borrowing.fixedTerm",
+          "__placeholder": "forms.borrowing.fixedTermPlaceholder",
+          "validation": []
+        },
+        {
+          "id": "fixedRateEndDate",
+          "component": "datepicker",
+          "formatData": "DD MMM YYYY",
+          "value": null,
+          "visible": false,
+          "label": "forms.borrowing.fixedRateEndDate",
+          "placeholder": "forms.borrowing.fixedRateEndDatePlaceholder",
+          "dataType": "date",
+          "validation": []
+        },
+        {
+          "id": "limitAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "limit",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.borrowing.limit",
+              "placeholder": "forms.borrowing.limitPlaceholder",
+              "dataType": "number",
+              "formatData": "currency",
+              "maxValue": 10000000,
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "upfrontFees",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.borrowing.upfrontFee",
+          "placeholder": "forms.borrowing.upfrontFeePlaceholder",
+          "dataType": "number",
+          "formatData": "currency",
+          "maxValue": 100000,
+          "validation": []
+        },
+        {
+          "id": "isLMI",
+          "component": "radio",
+          "value": false,
+          "visible": false,
+          "label": "forms.borrowing.isLMI",
+          "dataType": "boolean"
+        },
+        {
+          "id": "LMI",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "",
+          "placeholder": "forms.borrowing.LMIPlaceholder",
+          "dataType": "number",
+          "formatData": "currency"
+        },
+        {
+          "id": "purposeAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": false,
+          "fields": [
+            {
+              "id": "properties",
+              "component": "dropdown",
+              "value": [],
+              "options": [],
+              "visible": false,
+              "multiple": true,
+              "label": "forms.borrowing.properties",
+              "__placeholder": "forms.borrowing.propertiesPlaceholder",
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "securedAgainstAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": false,
+          "fields": [
+            {
+              "id": "securedAgainst",
+              "component": "dropdown",
+              "value": [],
+              "options": [],
+              "visible": false,
+              "multiple": true,
+              "label": "forms.borrowing.securedAgainst",
+              "__placeholder": "forms.borrowing.securedAgainstPlaceholder",
+              "validation": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "group-5",
+      "label": "forms.borrowing.repaymentDetails",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "interestRateAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "interestRate",
+              "component": "interestRate",
+              "value": {},
+              "visible": true,
+              "label": "forms.borrowing.interestRate",
+              "placeholder": "forms.borrowing.interestRatePlaceholder",
+              "loanTypeId": "loanType"
+            }
+          ]
+        },
+        {
+          "id": "repaymentTypeAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "repaymentType",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "visible": true,
+              "label": "forms.borrowing.repaymentType",
+              "__placeholder": "forms.borrowing.repaymentTypePlaceholder",
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "interestOnlyExpiryDate",
+          "component": "datepicker",
+          "formatData": "DD MMM YYYY",
+          "value": null,
+          "visible": false,
+          "label": "forms.borrowing.interestOnlyExpiryDate",
+          "placeholder": "forms.borrowing.interestOnlyExpiryDatePlaceholder",
+          "dataType": "date",
+          "validation": []
+        },
+        {
+          "id": "repaymentAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "repaymentAmount",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.borrowing.repaymentAmount",
+              "placeholder": "forms.borrowing.repaymentAmountPlaceholder",
+              "dataType": "number",
+              "formatData": "currency",
+              "maxValue": 10000000,
+              "validation": []
+            },
+            {
+              "id": "frequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Monthly"
+              },
+              "options": [],
+              "visible": true,
+              "label": "forms.borrowing.frequency",
+              "__placeholder": "forms.borrowing.frequencyPlaceholder",
+              "validation": []
+            },
+            {
+              "id": "nextRepaymentDate",
+              "component": "datepicker",
+              "formatData": "DD/MM/YYYY",
+              "visible": false,
+              "value": "",
+              "options": [],
+              "required": false,
+              "label": "forms.borrowing.nextRepaymentDate"
+            }
+          ]
+        },
+        {
+          "id": "paymentAccount",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.borrowing.paymentAccount",
+          "__placeholder": "forms.borrowing.paymentAccountPlaceholder",
+          "validation": []
+        },
+        {
+          "id": "autosweep",
+          "component": "switch",
+          "value": false,
+          "visible": false,
+          "label": "forms.borrowing.autosweep",
+          "validation": []
+        }
+      ]
+    },
+    {
+      "id": "group-6",
+      "label": "forms.borrowing.ongoingCosts",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "loanFeesAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "loanFees",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.borrowing.loanFees",
+              "placeholder": "forms.borrowing.loanFeesPlaceholder",
+              "dataType": "number",
+              "formatData": "currency",
+              "validation": [],
+              "maxValue": 100000
+            },
+            {
+              "id": "loanFeesFrequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Monthly"
+              },
+              "options": [],
+              "visible": true,
+              "label": "forms.borrowing.loanFeesFrequency",
+              "__placeholder": "forms.borrowing.loanFeesFrequencyPlaceholder",
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "paymentAccountOngoingCost",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.borrowing.paymentAccount",
+          "__placeholder": "forms.borrowing.paymentAccountPlaceholder",
+          "validation": []
+        }
+      ]
+    },
+    {
+      "id": "group_7",
+      "fields": [
+        {
+          "id": "moneySmartsJar",
+          "component": "label",
+          "value": "",
+          "visible": true,
+          "label": "forms.borrowing.moneySmartsJar"
+        },
+        {
+          "id": "isTrackedInMoneySmartsAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": false,
+          "fields": [
+            {
+              "id": "isTrackedInMoneySmarts",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "visible": true,
+              "label": "forms.bank.isTrackedInMoneySmarts",
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "note",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.borrowing.note",
+          "dataType": "string",
+          "multiline": true,
+          "numberOfLines": 4,
+          "validation": []
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

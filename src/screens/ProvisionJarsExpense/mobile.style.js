@@ -1,0 +1,96 @@
+import { AppSize } from 'theme';
+
+export default {
+  container: {
+    flex: 1,
+    backgroundColor: 'palette.color-dynamic-container',
+  },
+  transactionTitle: {
+    fontSize: 16,
+    color: 'palette.color-primary-text-1',
+    paddingHorizontal: 15,
+    marginBottom: 10,
+  },
+  itemContainer: { marginBottom: 10 },
+  cardContainer: {
+    margin: 0,
+    padding: 0,
+    backgroundColor: 'palette.color-white-1',
+    shadowColor: 'palette.color-white-1',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderTopColor: 'palette.color-line-1',
+    borderBottomColor: 'palette.color-line-1',
+    borderRightColor: 'palette.color-line-1',
+    borderLeftWidth: 4,
+    borderLeftColor: 'custom.screens.jar.primary-color1',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  cartTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  cartTitle: {
+    fontSize: 14,
+    color: 'palette.color-primary-text-1',
+    lineHeight: 20,
+  },
+  cartItemContainer: { paddingHorizontal: 15 },
+  cartFooterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  cartFooterText: {
+    fontSize: 12,
+    color: 'palette.color-primary-text-2',
+    lineHeight: 16,
+  },
+  cartCalendarIcon: { marginRight: 8 },
+  addTransactionButtonContainer: { marginHorizontal: 15, marginBottom: 15 },
+  addTransactionButton: {
+    height: 60,
+    width: '100%',
+    borderStyle: 'dashed',
+    borderRadius: 10,
+    borderColor: 'custom.screens.jar.dash-border-color',
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  addTransactionText: {
+    marginLeft: 15,
+  },
+  addTransactionIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    color: 'palette.color-white-1',
+    backgroundColor: 'palette.color-primary-1',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalTitle: {
+    fontSize: 18,
+    lineHeight: 26,
+    alignSelf: 'center',
+    color: 'palette.color-primary-text-1',
+    marginBottom: 20,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  modalButton: {
+    minWidth: AppSize.screen.width < 350 ? 130 : 140,
+    margin: 5,
+    height: 44,
+  },
+  floatingButton: {
+    height: 42,
+  },
+};

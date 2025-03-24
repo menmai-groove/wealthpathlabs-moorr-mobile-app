@@ -1,0 +1,29 @@
+{
+  "layout": [
+    {
+      "id": "add-objectids",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "date",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "required": true,
+          "visible": true,
+          "label": "screens.historicalLog.date",
+          "placeholder": "screens.historicalLog.date",
+          "dataType": "date",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.requiredDate"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

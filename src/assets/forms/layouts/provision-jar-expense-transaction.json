@@ -1,0 +1,64 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "component": "group",
+      "fields": [
+        {
+          "id": "transactionName",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "screens.provisionsJar.transactionName",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.provisionsJar.transactionCardNameRequired"
+            },
+            {
+              "type": "maxChar",
+              "number": 100,
+              "message": "screens.provisionsJar.transactionCardNameError"
+            }
+          ]
+        },
+        {
+          "id": "amount",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "global.amount",
+          "dataType": "number",
+          "formatData": "currency",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.provisionsJar.amountError"
+            }
+          ]
+        },
+        {
+          "id": "date",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "placeholder": "DD MMMM YYYY",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "global.date",
+          "dataType": "date",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.provisionsJar.dateRequired"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

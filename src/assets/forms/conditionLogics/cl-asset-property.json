@@ -1,0 +1,48 @@
+{
+  "logics": [
+    {
+      "type": "visible",
+      "field": "ownershipSplitPerson1",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Joint",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "ownershipSplitPerson2",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Joint",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "totalPercent",
+      "fields": [
+        "ownershipSplitPerson1",
+        "ownershipSplitPerson2"
+      ],
+      "value": 100,
+      "condition": {
+        "operator": "AND",
+        "condition": []
+      }
+    }
+  ]
+}

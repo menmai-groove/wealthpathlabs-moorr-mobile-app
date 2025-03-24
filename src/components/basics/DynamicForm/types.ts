@@ -1,0 +1,17 @@
+type componentTypeNames =
+  | 'input'
+  | 'password'
+  | 'checkbox'
+  | 'address-autocomplete'
+  | 'dropdown'
+  | 'datepicker'
+  | 'autocomplete'
+  | 'modal'
+  | 'industry-autocomplete'
+  | 'pre-tax'
+  | 'switch'
+  | 'label'
+  | 'radio'
+  | 'interestRate'
+  | 'custom-component'
+  | 'group';

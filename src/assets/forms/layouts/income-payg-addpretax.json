@@ -1,0 +1,75 @@
+{
+  "layout": [
+    {
+      "id": "taxDeductions",
+      "component": "group",
+      "collapse": true,
+      "visible": true,
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "forms.payg.nameTaxDeduction",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.payg.nameTaxDeductionRequied"
+            },
+            {
+              "type": "maxChar",
+              "number": 100,
+              "message": "forms.payg.nameTaxDeductionMaxCharacters"
+            }
+          ]
+        },
+        {
+          "id": "amountAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "amount",
+              "component": "input",
+              "value": "",
+              "required": true,
+              "visible": true,
+              "label": "forms.payg.amountTaxDeduction",
+              "placeholder": "",
+              "dataType": "number",
+              "formatData": "currency",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.payg.amountTaxDeductionRequied"
+                }
+              ]
+            },
+            {
+              "id": "frequency",
+              "component": "dropdown",
+              "visible": true,
+              "value": {
+                "value": "Yearly"
+              },
+              "options": [],
+              "required": true,
+              "label": "forms.payg.frequencyTaxDeduction",
+              "__placeholder": "forms.payg.frequencyPlaceholder",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.payg.frequencyTaxDeductionRequied"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

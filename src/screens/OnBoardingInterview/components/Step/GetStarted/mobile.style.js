@@ -1,0 +1,75 @@
+export default {
+  container: {
+    flex: 1,
+    backgroundColor: 'palette.color-dynamic-container',
+  },
+  scrollView: {
+    flex: 1,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  safeView: {
+    backgroundColor: 'palette.color-primary-1',
+    alignItems: 'center',
+  },
+  logo: {
+    height: 32,
+    width: 140,
+    resizeMode: 'contain',
+    marginTop: 17,
+    marginBottom: 37,
+  },
+  bubbleHeader: {
+    position: 'absolute',
+    right: 6,
+    bottom: '50%',
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    opacity: 0.5,
+    color1: 'palette.color-primary-2',
+    color2: 'palette.color-primary-1',
+  },
+  title: {
+    textAlign: 'center',
+    paddingBottom: 25,
+  },
+  textFooter: {
+    marginTop: 20,
+    textAlign: 'center',
+    fontSize: 14,
+    lineHeight: 20,
+    color: 'palette.color-primary-text-1',
+  },
+  textHightlight: {
+    color: 'palette.color-primary-1',
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  box: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: -20,
+  },
+  cardItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'palette.color-white-3',
+    marginBottom: 10,
+    borderRadius: 20,
+    paddingVertical: 10,
+  },
+  imageCardItem: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  separator: { width: 12 },
+  textDescCardItem: {
+    color: 'palette.color-primary-text-1',
+    marginTop: 5,
+  },
+};

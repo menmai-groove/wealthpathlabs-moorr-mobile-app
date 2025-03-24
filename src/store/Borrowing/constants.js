@@ -1,0 +1,16 @@
+export const BORROWING_UPDATE_DATA = 'BORROWING/UPDATE_DATA';
+export const BORROWING_SUBMIT_DATA = 'BORROWING/SUBMIT_DATA';
+export const BORROWING_RESET_DATA = 'BORROWING/RESET_DATA';
+export const BORROWING_GET_ASSETS = 'BORROWING/GET_ASSETS';
+export const BORROWING_SET_ASSETS = 'BORROWING/SET_ASSETS';
+export const BORROWING_CALL_API_SAVE_DATA = 'BORROWING/CALL_API_SAVE_DATA';
+export const BORROWING_GET_DETAIL = 'BORROWING/GET_DETAIL';
+export const BORROWING_GET_LINKED_OFFSETS = 'BORROWING/BORROWING_GET_LINKED_OFFSETS';
+
+export const AddNewBorrowingStep = {
+  Step1: 'step1',
+  Step1_1: 'step1_1',
+  Step2: 'step2',
+  Step3: 'step3',
+  FormAddDetail: 'form_add_detail',
+};

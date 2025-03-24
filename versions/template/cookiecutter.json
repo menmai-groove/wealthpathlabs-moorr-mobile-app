@@ -1,0 +1,12 @@
+{
+  "single_word_app_name": "development",
+  "android_app_name": "Moorr-Dev",
+  "ios_app_name": "Moorr-Dev",
+  "android_bundle_id": "com.moorr.android.dev",
+  "ios_app_identifier": "com.moorr.ios.dev",
+  "itc_team_id": "123840761",
+  "team_id": "6VGPTY7HAS",
+  "appicon_pathname": "../template/images/app_icon.png",
+  "launchscreen_logo_pathname": "../template/images/bootsplash_logo.png",
+  "launchscreen_bg_pathname": "../template/images/splash_screen_background.png"
+}

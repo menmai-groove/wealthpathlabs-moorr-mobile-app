@@ -1,0 +1,21 @@
+name: "prepare-deployment-assets"
+description: "Prepare deployment assets"
+
+inputs:
+  deploymentTarget:
+    description: "Deployment Target"
+    required: true
+
+  configEncryptedKey:
+    description: "Deployment Target"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      shell: bash
+      env:
+        DEPLOYMENT_TARGET: ${{ inputs.deploymentTarget }}
+        ENCRYPTED_KEY: ${{ inputs.configEncryptedKey }}
+      run: bash ./.build-scripts/config.sh

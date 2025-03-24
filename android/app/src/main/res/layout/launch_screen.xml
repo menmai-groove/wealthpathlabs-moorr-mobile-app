@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/launchscreen_background"
+        android:scaleType="fitXY"
+        android:src="@mipmap/splash_screen_background" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/launchscreen_logo"
+        android:scaleType="centerInside"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        android:src="@mipmap/bootsplash_logo" />
+
+</FrameLayout>

@@ -1,0 +1,203 @@
+default_platform(:ios)
+
+app_name = ENV["APP_NAME"]
+appcenter_token = ENV["APP_CENTER_LOGIN_TOKEN"]
+appcenter_app_name = ENV["APP_CENTER_APP_NAME"]
+appcenter_deployment_name = ENV["APP_CENTER_DEPLOYMENT"]
+appcenter_private_key_path = ENV["APP_CENTER_PRIVATE_KEY_PATH"]
+slack_url = ENV["SLACK_URL"]
+slack_channel = ENV["SLACK_CHANNEL"]
+xcode_provision_path = ENV["XCODE_PROVISION_PATH"]
+xcode_certificate_path = ENV["XCODE_CERTIFICATE_PATH"]
+xcode_certificate_password = ENV["XCODE_CERTIFICATE_PASSWORD"]
+keychain_name = ENV["KEYCHAIN_NAME"]
+keychain_password = ENV["KEYCHAIN_PASSWORD"]
+xcodeproj = ENV["XCODEPROJ"]
+schemaproj = ENV["SCHEMAPROJ"]
+
+bundle_id = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+itc_team_id = CredentialsManager::AppfileConfig.try_fetch_value(:itc_team_id)
+team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+
+platform :ios do
+  desc "Run build"
+  lane :build do
+    version_code = get_version_number(
+      xcodeproj: xcodeproj,
+      target: schemaproj
+    )
+    build_number = get_testflight_build_number(xcodeproj, bundle_id, version_code, itc_team_id)
+    new_build_number = build_number + 1
+    increment_build_number(
+      xcodeproj: xcodeproj,
+      build_number: new_build_number
+    )
+    update_project_team(
+      path: xcodeproj,
+      teamid: team_id
+    )
+    install_provisioning_certificate(keychain_name, keychain_password, xcodeproj, xcode_provision_path, xcode_certificate_path, xcode_certificate_password)
+    build_app(scheme: schemaproj)
+  end
+
+  desc "Push a new bundle release to CodePush"
+  lane :codepush do
+    begin
+      version_code = get_version_number(
+        xcodeproj: xcodeproj,
+        target: schemaproj
+      )
+      build_number = get_testflight_build_number(xcodeproj, bundle_id, version_code, itc_team_id)
+      increment_build_number(
+        xcodeproj: xcodeproj,
+        build_number: build_number
+      )
+      release_vesion = "ota-#{app_name}-#{bundle_id}-v#{version_code}-beta.#{build_number}.#{Time.now.to_i}"
+
+      codepush_login(login_token: appcenter_token)
+      codepush_release_react(
+        app_name: appcenter_app_name,
+        deployment_name: appcenter_deployment_name,
+        private_key_path: appcenter_private_key_path,
+        execution_dir_path: "../",
+        mandatory: true
+      )
+      codepush_logout
+      git_tag(release_vesion)
+      slack_codepush_success(release_vesion, app_name, slack_channel, slack_url)
+    rescue => error
+      slack_error(error.message[0..200], app_name, slack_channel, slack_url)
+    end
+  end
+
+  desc "Push a new release build to the App Store"
+  lane :deploy do
+    begin
+      version_code = get_version_number(
+        xcodeproj: xcodeproj,
+        target: schemaproj
+      )
+      build_number = get_testflight_build_number(xcodeproj, bundle_id, version_code, itc_team_id)
+      new_build_number = build_number + 1
+      increment_build_number(
+        xcodeproj: xcodeproj,
+        build_number: new_build_number
+      )
+      update_project_team(
+        path: xcodeproj,
+        teamid: team_id
+      )
+      install_provisioning_certificate(keychain_name, keychain_password, xcodeproj, xcode_provision_path, xcode_certificate_path, xcode_certificate_password)
+      build_app(scheme: schemaproj)
+      release_vesion = "#{app_name}-#{bundle_id}-v#{version_code}-beta.#{new_build_number}"
+      upload_to_app_store(
+        skip_screenshots: true,
+        skip_metadata: true,
+        submission_information: {
+          export_compliance_uses_encryption: true,
+          export_compliance_compliance_required: true
+        },
+        team_id: itc_team_id
+      )
+      git_tag(release_vesion)
+      slack_success(release_vesion, app_name, slack_channel, slack_url)
+    rescue => error
+      slack_error(error.message[0..200], app_name, slack_channel, slack_url)      
+    end
+  end
+
+  def install_provisioning_certificate(keychain_name, keychain_password, xcodeproj, xcode_provision_path, xcode_certificate_path, xcode_certificate_password)
+    create_keychain(
+      name: keychain_name,
+      password: keychain_password,
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: true
+    )
+    install_provisioning_profile(path: xcode_provision_path)
+    update_project_provisioning(
+      xcodeproj: xcodeproj,
+      profile: xcode_provision_path,
+      build_configuration: 'Release',
+      code_signing_identity: 'iPhone Distribution'
+    )
+    import_certificate(
+      keychain_name: keychain_name,
+      keychain_password: keychain_password,
+      certificate_path: "fastlane/AppleWWDRCAG3.cer"
+    )
+    import_certificate(
+      keychain_name: keychain_name,
+      keychain_password: keychain_password,
+      certificate_path: xcode_certificate_path,
+      certificate_password: xcode_certificate_password
+    )
+  end
+
+  def get_testflight_build_number(xcodeproj, bundle_id, version_code, itc_team_id)
+    proj_build_number = get_build_number(xcodeproj: xcodeproj)
+    build_number = latest_testflight_build_number(
+      team_id: itc_team_id,
+      app_identifier: bundle_id,
+      version: version_code,
+      initial_build_number: proj_build_number.to_i - 1
+    )
+    build_number
+  end
+
+  def git_tag(release_vesion)
+    git_add(path: "*")
+    add_git_tag(
+      tag: release_vesion
+    )
+    push_git_tags
+    reset_git_repo(force: true, disregard_gitignore: false)
+  end
+
+  def slack_success(vesion, app_name, slack_channel, slack_url)
+    slack(
+      message: "New App version successfully released!",
+      channel: "##{slack_channel}",
+      success: true,
+      payload: {
+        "App Version" => vesion,
+        "App Name" => app_name,
+        "Platform" => "iOS",
+        "Build Date" => Time.new.to_s,
+      },
+      slack_url: slack_url
+    )
+  end
+
+  def slack_codepush_success(vesion, app_name, slack_channel, slack_url)
+    slack(
+      message: "New CodePush Released",
+      channel: "##{slack_channel}",
+      success: true,
+      payload: {
+        "App Version" => vesion,
+        "App Name" => app_name,
+        "Platform" => "iOS",
+        "Build Date" => Time.new.to_s,
+      },
+      slack_url: slack_url
+    )
+  end
+
+  def slack_error(message, app_name, slack_channel, slack_url)
+    slack(
+      message: "An error appear during build proccess",
+      channel: "##{slack_channel}",
+      success: false,
+      payload: {
+        "Error Message" => message,
+        "Platform" => "iOS",
+        "App Name" => app_name,
+        "Build Date" => Time.new.to_s,
+      },
+      slack_url: slack_url
+    )
+  end
+  
+end

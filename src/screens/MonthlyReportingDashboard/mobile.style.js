@@ -1,0 +1,82 @@
+export default {
+  container: {
+    flex: 1,
+    backgroundColor: 'palette.color-dynamic-container',
+  },
+  scrollContent: {
+    marginHorizontal: 15,
+  },
+  tableTextTitle: {
+    color: 'palette.color-primary-1',
+    fontSize: 14,
+    lineHeight: 20,
+    fontFamily: 'Poppins-SemiBold',
+    textAlign: 'right',
+    paddingRight: 15,
+  },
+  tableTextLeft: {
+    color: 'palette.color-primary-text-1',
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+    lineHeight: 20,
+    paddingHorizontal: 10,
+  },
+  tableTextCell: {
+    textAlign: 'right',
+    color: 'palette.color-primary-text-3',
+    fontSize: 14,
+    fontFamily: 'Poppins-Medium',
+    lineHeight: 20,
+    paddingRight: 15,
+  },
+  row: { height: 50, borderColor: '#d4d4d4' },
+  tableFirstRow: {
+    backgroundColor: 'custom.components.table.title-background',
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
+    height: 70,
+  },
+  tableFirstRow2: {
+    backgroundColor: 'custom.components.table.title-background',
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+    height: 70,
+    paddingRight: 15,
+  },
+  tableContentRow: {
+    backgroundColor: 'custom.components.table.content-background',
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
+    width: '100%',
+  },
+  tableContentRow2: {
+    backgroundColor: 'custom.components.table.content-background',
+  },
+  tableContentRow2Radius: {
+    backgroundColor: 'custom.components.table.content-background',
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+  },
+  tableSize: {
+    cellHeight: 50,
+    cellWidth: 11,
+    leftColumnWidth: 175,
+  },
+  tableCellBold: { color: 'palette.color-primary-text-1' },
+  cellContainer: { flexDirection: 'row' },
+  expandedButtonView: {
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  expandedButton: {
+    backgroundColor: 'palette.color-grey-2',
+    paddingVertical: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginHorizontal: 30,
+    width: '70%',
+  },
+};

@@ -1,0 +1,283 @@
+{
+  "layout": [
+    {
+      "id": "income",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "forms.income.name",
+          "placeholder": "forms.income.nameIncomePlaceholder",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.income.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "totalAnnual",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "readonly": true,
+          "label": "forms.payg.totalAnnual",
+          "placeholder": "",
+          "formatData": "currency"
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "label": "forms.income.detailLabel",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": "",
+              "options": [],
+              "required": true,
+              "visible": true,
+              "label": "forms.income.ownership",
+              "__placeholder": "forms.income.ownershipPlaceholder",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.borrowing.ownershipRequired"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "basis",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "required": false,
+          "visible": true,
+          "label": "forms.payg.basis",
+          "__placeholder": "forms.payg.basisPlaceholder"
+        },
+        {
+          "id": "startDate",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "required": false,
+          "visible": true,
+          "label": "screens.monthlyCheckUp.startDate",
+          "placeholder": "screens.monthlyCheckUp.startDate",
+          "dataType": "date"
+        },
+        {
+          "id": "position",
+          "component": "input",
+          "value": "",
+          "required": false,
+          "visible": true,
+          "label": "forms.payg.positionTitle",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "maxChar",
+              "number": 100,
+              "message": "forms.asset.positionMaxCharacters"
+            }
+          ]
+        },
+        {
+          "id": "industry",
+          "component": "industry-autocomplete",
+          "required": false,
+          "visible": true,
+          "value": {},
+          "placeholder": ""
+        },
+        {
+          "id": "employer.name",
+          "component": "input",
+          "value": "",
+          "required": false,
+          "visible": true,
+          "label": "forms.payg.employerName",
+          "dataType": "string",
+          "iconRight": "employer",
+          "validation": [
+            {
+              "type": "maxChar",
+              "number": 100,
+              "message": "forms.asset.employerNameMaxCharacters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "incomeBreakdown",
+      "label": "forms.asset.incomeBreakdown",
+      "component": "collapse",
+      "collapse": true,
+      "visible": true,
+      "fields": [
+        {
+          "id": "amountAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "amount",
+              "component": "input",
+              "value": "",
+              "required": false,
+              "visible": true,
+              "label": "forms.payg.grossBase",
+              "placeholder": "",
+              "dataType": "number",
+              "formatData": "currency"
+            }
+          ]
+        },
+        {
+          "id": "averageOvertimeIncomePAAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "averageOvertimeIncomePA",
+              "component": "input",
+              "value": "",
+              "required": false,
+              "visible": true,
+              "label": "forms.payg.AverageOvertime",
+              "placeholder": "",
+              "dataType": "number",
+              "formatData": "currency"
+            }
+          ]
+        },
+        {
+          "id": "averageCommissionPAAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "averageCommissionPA",
+              "component": "input",
+              "value": "",
+              "required": false,
+              "visible": true,
+              "label": "forms.payg.AverageCommission",
+              "placeholder": "",
+              "dataType": "number",
+              "formatData": "currency"
+            }
+          ]
+        },
+        {
+          "id": "averageBonusPAAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "averageBonusPA",
+              "component": "input",
+              "value": "",
+              "required": false,
+              "visible": true,
+              "label": "forms.payg.AverageBonus",
+              "placeholder": "",
+              "dataType": "number",
+              "formatData": "currency"
+            }
+          ]
+        },
+        {
+          "id": "paymentFrequency",
+          "component": "dropdown",
+          "visible": true,
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "required": false,
+          "label": "forms.asset.paymentFrequency",
+          "__placeholder": "forms.asset.paymentFrequencyPlaceholder"
+        },
+        {
+          "id": "nextPayDate",
+          "component": "datepicker",
+          "formatData": "DD/MM/YYYY",
+          "visible": false,
+          "value": "",
+          "options": [],
+          "required": false,
+          "label": "forms.income.nextPayDate"
+        }
+      ]
+    },
+    {
+      "id": "pretax",
+      "label": "forms.payg.preTaxDeduction",
+      "component": "collapse",
+      "collapse": true,
+      "visible": true,
+      "fields": [
+        {
+          "id": "taxDeductions",
+          "component": "pre-tax",
+          "value": "",
+          "required": false,
+          "visible": true,
+          "placeholder": "",
+          "formatData": "currency"
+        }
+      ]
+    },
+    {
+      "id": "moneySmart",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "moneySmarts",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "readonly": true,
+          "label": "forms.payg.moneySmartJar",
+          "placeholder": ""
+        },
+        {
+          "id": "notes",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": false,
+          "label": "forms.payg.notes",
+          "placeholder": "",
+          "dataType": "string",
+          "multiline": true
+        }
+      ]
+    }
+  ]
+}

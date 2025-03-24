@@ -1,0 +1,40 @@
+diff --git a/node_modules/react-native-walkthrough-tooltip/src/tooltip.js b/node_modules/react-native-walkthrough-tooltip/src/tooltip.js
+index db612fd..b5b85ea 100644
+--- a/node_modules/react-native-walkthrough-tooltip/src/tooltip.js
++++ b/node_modules/react-native-walkthrough-tooltip/src/tooltip.js
+@@ -138,7 +138,7 @@ class Tooltip extends Component {
+   }
+ 
+   componentDidMount() {
+-    this.dimensionsSubscription = Dimensions.addEventListener(
++    this.dimensionsSubscription = this.dimensionListener = Dimensions.addEventListener(
+       'change',
+       this.updateWindowDims,
+     );
+@@ -168,7 +168,7 @@ class Tooltip extends Component {
+       this.dimensionsSubscription.remove();
+     } else {
+       // react native < 0.65.*
+-      Dimensions.removeEventListener('change', this.updateWindowDims);
++      if (this.dimensionListener) { this.dimensionListener.remove(); };
+     }
+ 
+     if (this.interactionPromise) {
+@@ -239,9 +239,14 @@ class Tooltip extends Component {
+ 
+   measureContent = e => {
+     const { width, height } = e.nativeEvent.layout;
+-    const contentSize = new Size(width, height);
+-    this.setState({ contentSize }, () => {
+-      this.computeGeometry();
++    // https://github.com/jasongaare/react-native-walkthrough-tooltip/issues/116
++    const newContentSize = new Size(width, height);
++    this.setState(({ contentSize }) => ({
++      contentSize: {
++        width: Math.max(contentSize.width, newContentSize.width),
++        height: Math.max(contentSize.height, newContentSize.height),
++      }}), () => {
++       this.computeGeometry();
+     });
+   };
+ 

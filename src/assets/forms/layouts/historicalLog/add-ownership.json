@@ -1,0 +1,186 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "date",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "required": true,
+          "visible": true,
+          "label": "screens.historicalLog.date",
+          "placeholder": "screens.historicalLog.date",
+          "dataType": "date",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.requiredDate"
+            }
+          ]
+        },
+        {
+          "id": "ownership",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "originalOptions": [],
+          "disableAutoScroll": true,
+          "visible": true,
+          "required": true,
+          "label": "screens.historicalLog.ownership",
+          "placeholder": "screens.historicalLog.ownershipPlaceholder",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.ownershipRequired"
+            }
+          ]
+        },
+        {
+          "id": "ownershipSplitPerson1",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "screens.historicalLog.ownershipSplitPerson1",
+          "placeholder": "screens.historicalLog.ownershipSplitPerson1Placeholder",
+          "labelDynamic": {
+            "person": "Person1"
+          },
+          "dataType": "number",
+          "iconRight": "percent",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100,
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.ownershipSplitPerson1Required"
+            }
+          ]
+        },
+        {
+          "id": "ownershipSplitPerson2",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "screens.historicalLog.ownershipSplitPerson2",
+          "placeholder": "screens.historicalLog.ownershipSplitPerson2Placeholder",
+          "labelDynamic": {
+            "person": "Person2"
+          },
+          "dataType": "number",
+          "iconRight": "percent",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100,
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.ownershipSplitPerson2Required"
+            }
+          ]
+        },
+        {
+          "id": "otherBorrowerPercentage",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "screens.historicalLog.otherBorrowerPercentage",
+          "placeholder": "screens.historicalLog.otherBorrowerPercentagePlaceholder",
+          "dataType": "number",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100,
+          "iconRight": "percent",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.otherBorrowerPercentageRequired"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditional": {
+    "logics": [
+      {
+        "type": "visible",
+        "field": "ownershipSplitPerson1",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Joint",
+              "key": "label"
+            },
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "ownershipSplitPerson2",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Joint",
+              "key": "label"
+            },
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "otherBorrowerPercentage",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "totalPercent",
+        "fields": [
+          "ownershipSplitPerson1",
+          "ownershipSplitPerson2",
+          "otherBorrowerPercentage"
+        ],
+        "value": 100,
+        "condition": {
+          "operator": "AND",
+          "condition": []
+        }
+      }
+    ]
+  }
+}

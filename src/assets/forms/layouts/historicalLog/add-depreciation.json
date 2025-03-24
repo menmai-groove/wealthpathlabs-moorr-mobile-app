@@ -1,0 +1,68 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "date",
+          "component": "datepicker",
+          "formatData": "YYYY",
+          "value": null,
+          "required": true,
+          "visible": true,
+          "label": "screens.historicalLog.date",
+          "placeholder": "screens.historicalLog.date",
+          "dataType": "date",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.requiredDate"
+            }
+          ]
+        },
+        {
+          "id": "annualDepreciationAmount",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "screens.historicalLog.annualDepreciationAmount",
+          "placeholder": "",
+          "dataType": "number",
+          "formatData": "currencyWithNegative",
+          "minValue": 0,
+          "maxValue": 100000000,
+          "validation": []
+        },
+        {
+          "id": "plantAndEquipment",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "screens.historicalLog.plantAndEquipment",
+          "placeholder": "",
+          "dataType": "number",
+          "formatData": "currencyWithNegative",
+          "minValue": 0,
+          "maxValue": 100000000,
+          "validation": []
+        },
+        {
+          "id": "capitalWorks",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "screens.historicalLog.capitalWorks",
+          "placeholder": "",
+          "dataType": "number",
+          "formatData": "currencyWithNegative",
+          "minValue": 0,
+          "maxValue": 100000000,
+          "validation": []
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

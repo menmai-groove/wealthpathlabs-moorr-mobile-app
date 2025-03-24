@@ -1,0 +1,921 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": true,
+          "label": "forms.asset.cardName",
+          "placeholder": "screens.asset.nameCardPlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.asset.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "valueAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "value",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.currentValue",
+              "dataType": "number",
+              "formatData": "currency",
+              "minValue": 0,
+              "maxValue": 100000000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "superannuationInformation",
+      "label": "forms.asset.superannuationInformation",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "isSmsf",
+          "component": "radio",
+          "value": false,
+          "visible": true,
+          "label": "forms.asset.isSmsf",
+          "dataType": "boolean"
+        },
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": "",
+              "options": [],
+              "originalOptions": [],
+              "disableAutoScroll": true,
+              "visible": true,
+              "required": true,
+              "label": "forms.asset.owner",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownerRequired"
+                }
+              ]
+            },
+            {
+              "id": "ownershipSplitPerson1",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.asset.ownershipSplit",
+              "labelDynamic": {
+                "person": "Person1"
+              },
+              "dataType": "number",
+              "iconRight": "percent",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            },
+            {
+              "id": "ownershipSplitPerson2",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.asset.ownershipSplit",
+              "labelDynamic": {
+                "person": "Person2"
+              },
+              "dataType": "number",
+              "iconRight": "percent",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            },
+            {
+              "id": "otherBorrowerPercentage",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.borrowing.otherBorrowerPercentage",
+              "placeholder": "forms.borrowing.otherBorrowerPercentagePlaceholder",
+              "dataType": "number",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "iconRight": "percent",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "provider",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.provider"
+        },
+        {
+          "id": "product",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.product"
+        },
+        {
+          "id": "strategy",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.strategy"
+        }
+      ]
+    },
+    {
+      "id": "salarySacrificeContributions",
+      "label": "forms.asset.salarySacrificeContributions",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        // {
+        //   "id": "salarySacrificeBool",
+        //   "component": "radio",
+        //   "value": false,
+        //   "visible": true,
+        //   "label": "forms.asset.salarySacrificeBool",
+        //   "dataType": "boolean"
+        // },
+        {
+          "id": "salarySacrificeClient1AsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "salarySacrificeClient1",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.salarySacrificeClient",
+              "labelDynamic": {
+                "person": "Person1"
+              },
+              "dataType": "number",
+              "formatData": "currency"
+            },
+            {
+              "id": "salarySacrificeClient1Frequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Yearly"
+              },
+              "options": [],
+              "visible": true,
+              "label": "forms.asset.clientFrequency",
+              "labelDynamic": {
+                "person": "Person1"
+              }
+            }
+          ]
+        },
+        {
+          "id": "salarySacrificeClient2AsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "salarySacrificeClient2",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.salarySacrificeClient",
+              "labelDynamic": {
+                "person": "Person2"
+              },
+              "dataType": "number",
+              "formatData": "currency"
+            },
+            {
+              "id": "salarySacrificeClient2Frequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Yearly"
+              },
+              "options": [],
+              "visible": true,
+              "label": "forms.asset.clientFrequency",
+              "labelDynamic": {
+                "person": "Person2"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personalContributions",
+      "label": "forms.asset.personalContributions",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        // {
+        //   "id": "personalContributionsBool",
+        //   "component": "radio",
+        //   "value": false,
+        //   "visible": true,
+        //   "label": "forms.asset.personalContributionsBool",
+        //   "dataType": "boolean"
+        // },
+        {
+          "id": "personalContributionsClient1AsAt",
+          "component": "asAt",
+          "visible": true,
+          "value": "",
+          "fields": [
+            {
+              "id": "personalContributionsClient1",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.personalContributionsClient",
+              "labelDynamic": {
+                "person": "Person1"
+              },
+              "dataType": "number",
+              "formatData": "currency"
+            },
+            {
+              "id": "personalContributionsClient1Frequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Yearly"
+              },
+              "options": [],
+              "visible": true,
+              "label": "forms.asset.clientFrequency",
+              "labelDynamic": {
+                "person": "Person1"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nextContributionClient1Date",
+          "component": "datepicker",
+          "formatData": "DD/MM/YYYY",
+          "visible": false,
+          "value": "",
+          "options": [],
+          "required": false,
+          "label": "forms.asset.nextContributionDate",
+          "labelDynamic": {
+            "person": "Person1"
+          }
+        },
+        {
+          "id": "personalContributionsClient2AsAt",
+          "component": "asAt",
+          "visible": true,
+          "value": "",
+          "fields": [
+            {
+              "id": "personalContributionsClient2",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.personalContributionsClient",
+              "labelDynamic": {
+                "person": "Person2"
+              },
+              "dataType": "number",
+              "formatData": "currency"
+            },
+            {
+              "id": "personalContributionsClient2Frequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Yearly"
+              },
+              "options": [],
+              "visible": true,
+              "label": "forms.asset.clientFrequency",
+              "labelDynamic": {
+                "person": "Person2"
+              }
+            }
+          ]
+        },
+        {
+          "id": "nextContributionClient2Date",
+          "component": "datepicker",
+          "formatData": "DD/MM/YYYY",
+          "visible": false,
+          "value": "",
+          "options": [],
+          "required": false,
+          "label": "forms.asset.nextContributionDate",
+          "labelDynamic": {
+            "person": "Person2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "formNote",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "notes",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.notes",
+          "dataType": "string",
+          "formatData": "",
+          "multiline": true,
+          "returnKeyType": "default"
+        }
+      ]
+    }
+  ],
+  "conditional": {
+    "logics": [
+      {
+        "type": "visible",
+        "field": "ownershipSplitPerson1",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Joint",
+              "key": "label"
+            },
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "ownershipSplitPerson2",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Joint",
+              "key": "label"
+            },
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "otherBorrowerPercentage",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "totalPercent",
+        "fields": [
+          "ownershipSplitPerson1",
+          "ownershipSplitPerson2",
+          "otherBorrowerPercentage"
+        ],
+        "value": 100,
+        "condition": {
+          "operator": "AND",
+          "condition": []
+        }
+      },
+      {
+        "type": "visible",
+        "field": "provider",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "isSmsf",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "product",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "isSmsf",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "salarySacrificeClient1",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "salarySacrificeBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Joint",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client1",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Other",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "salarySacrificeClient1Frequency",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "salarySacrificeBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Joint",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client1",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Other",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "salarySacrificeClient2",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "salarySacrificeBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "visible",
+                  "field": "ownershipSplitPerson2",
+                  "value": true
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client2",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "salarySacrificeClient2Frequency",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "salarySacrificeBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "visible",
+                  "field": "ownershipSplitPerson2",
+                  "value": true
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client2",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "personalContributionsClient1",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "personalContributionsBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Joint",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client1",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Other",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "personalContributionsClient1Frequency",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "personalContributionsBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Joint",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client1",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Other",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "personalContributionsClient2",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "personalContributionsBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "visible",
+                  "field": "ownershipSplitPerson2",
+                  "value": true
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client2",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "personalContributionsClient2Frequency",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "personalContributionsBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "visible",
+                  "field": "ownershipSplitPerson2",
+                  "value": true
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client2",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "exclude_option_value",
+        "field": "ownership",
+        "value": [
+          "Joint",
+          "Other"
+        ],
+        "key": "display",
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "isSmsf",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "salarySacrificeClient1AsAt",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "salarySacrificeBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Joint",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client1",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Other",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "salarySacrificeClient2AsAt",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "salarySacrificeBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "visible",
+                  "field": "ownershipSplitPerson2",
+                  "value": true
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client2",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "personalContributionsClient1AsAt",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "personalContributionsBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Joint",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client1",
+                  "key": "display"
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "Other",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "personalContributionsClient2AsAt",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              // "type": "=",
+              // "field": "personalContributionsBool",
+              // "value": true
+            },
+            {
+              "operator": "OR",
+              "condition": [
+                {
+                  "type": "visible",
+                  "field": "ownershipSplitPerson2",
+                  "value": true
+                },
+                {
+                  "type": "=",
+                  "field": "ownership",
+                  "value": "client2",
+                  "key": "display"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

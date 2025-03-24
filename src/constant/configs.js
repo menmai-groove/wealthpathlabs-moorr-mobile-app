@@ -1,0 +1,112 @@
+import { Platform } from 'react-native';
+import {
+  ACCOUNT_PASS,
+  ACCOUNT_USERNAME,
+  APP_STORE_LINK,
+  AUTO_SCALE_SIZE_MATTERS,
+  CLARITY_KEY,
+  CODEPUSH_DEPLOYMENT_KEY_ANDROID,
+  CODEPUSH_DEPLOYMENT_KEY_IOS,
+  FEEDBACK_INFORMING_LINK,
+  FINANCIAL_DASHBOARD_PAGE_SIZE,
+  GG_AUTHENTICATION_HELP_LINK,
+  GOOGLE_API_KEY_ANDROID,
+  GOOGLE_API_KEY_IOS,
+  GOOGLE_PLAY_LINK,
+  HISTORICAL_CAPITAL_GROWTH_MAXIMUM_DISPLAY_VALUE,
+  HISTORICAL_CAPITAL_GROWTH_MAXIMUM_VALUE,
+  HISTORICAL_CAPITAL_GROWTH_MIN_VALUE,
+  IDDLE_TIME_BACKPRESS_EXIT_APP,
+  INDUSTRY_PAGE_SIZE,
+  MAXIMUM_DEPENDANT,
+  MAX_BADGE,
+  MIN_SELECT_YEAR,
+  NOTIFICATION_PAGE_SIZE,
+  RANGE_SELECT_YEAR,
+  REGISTER_HELP_LINK,
+  REMOTE_CONFIG_CACHING_TIME,
+  ROOT_API,
+  TERM_CONDITION_JSON_LINK,
+  TRACKING_PROVISION_SPENT_LINK,
+  VERTICAL_TIMELINE_PAGE_SIZE,
+  WEALTH_DASHBOARD_LINK,
+  WEB_HOME_PAGE,
+} from 'react-native-dotenv';
+
+export default {
+  rootAPI: ROOT_API,
+  notificationChannelId: 'mywealth-app',
+  notificationChannelName: 'Moorr',
+  retryNetwork: 10,
+  menuAnimationDuration: 400,
+  iddleTimeBackPressExitApp: IDDLE_TIME_BACKPRESS_EXIT_APP
+    ? parseInt(IDDLE_TIME_BACKPRESS_EXIT_APP, 10)
+    : 1000,
+  autoScaleSizeMatters: AUTO_SCALE_SIZE_MATTERS ? parseFloat(AUTO_SCALE_SIZE_MATTERS) : 0,
+  appLink: Platform.select({
+    android: GOOGLE_PLAY_LINK,
+    ios: APP_STORE_LINK,
+  }),
+  remoteConfigCachingTime: REMOTE_CONFIG_CACHING_TIME
+    ? parseInt(REMOTE_CONFIG_CACHING_TIME, 10)
+    : 300,
+  feedbackInformingLink: FEEDBACK_INFORMING_LINK,
+  registerHelpLink: REGISTER_HELP_LINK,
+  googleAuthenticationHelpLink: GG_AUTHENTICATION_HELP_LINK,
+  termConditionJsonLink: TERM_CONDITION_JSON_LINK,
+  googlePlaceApiKey: Platform.select({
+    android: GOOGLE_API_KEY_ANDROID,
+    ios: GOOGLE_API_KEY_IOS,
+  }),
+  devAccount: {
+    username: ACCOUNT_USERNAME || 'tdson.dev002@gmail.com',
+    pass: ACCOUNT_PASS || 'Admin@123',
+  },
+  pagination: {
+    verticalTimeLinePageSize: parseInt(VERTICAL_TIMELINE_PAGE_SIZE, 10),
+    financialDashboardPageSize: parseInt(FINANCIAL_DASHBOARD_PAGE_SIZE, 10),
+    industrySearchPageSize: parseInt(INDUSTRY_PAGE_SIZE, 10),
+    notificationPageSize: parseInt(NOTIFICATION_PAGE_SIZE, 10),
+  },
+  verticalTimeline: {
+    rangeSelectYear: parseInt(RANGE_SELECT_YEAR, 10),
+    minSelectYear: parseInt(MIN_SELECT_YEAR, 10),
+  },
+  teasers: {
+    teaser1: {
+      source: require('assets/images/personal.png'),
+      isLottie: false,
+      aspectRatio: 1,
+    },
+    teaser2: {
+      source: require('assets/images/Teaser2.json'),
+      isLottie: true,
+      aspectRatio: 325.39 / 401.33,
+    },
+    teaser3: {
+      source: require('assets/images/Teaser3.png'),
+      isLottie: false,
+      aspectRatio: 345 / 352.66,
+    },
+    teaser4: {
+      source: require('assets/images/Teaser4.json'),
+      isLottie: true,
+      aspectRatio: 325.39 / 401.33,
+    },
+  },
+  maxBadge: parseInt(MAX_BADGE, 10),
+  historicalCapitalGrowthMaxValue: parseInt(HISTORICAL_CAPITAL_GROWTH_MAXIMUM_VALUE, 10),
+  historicalCapitalGrowthMinValue: parseInt(HISTORICAL_CAPITAL_GROWTH_MIN_VALUE, 10),
+  historicalCapitalGrowthMaxDisplayValue: parseInt(
+    HISTORICAL_CAPITAL_GROWTH_MAXIMUM_DISPLAY_VALUE,
+    10,
+  ),
+  circleMonthCheckUp: 13,
+  maximumDependant: parseInt(MAXIMUM_DEPENDANT, 10),
+  codePushDevelopmentKeyAndroid: CODEPUSH_DEPLOYMENT_KEY_ANDROID,
+  codePushDevelopmentKeyIos: CODEPUSH_DEPLOYMENT_KEY_IOS,
+  webHomePage: WEB_HOME_PAGE,
+  wealthDashboardLink: WEALTH_DASHBOARD_LINK,
+  clarityKey: CLARITY_KEY,
+  trackingProvisionSpentLink: TRACKING_PROVISION_SPENT_LINK,
+};

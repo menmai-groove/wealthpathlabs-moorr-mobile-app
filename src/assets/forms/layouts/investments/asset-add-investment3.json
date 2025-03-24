@@ -1,0 +1,13 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": []
+    }
+  ],
+  "conditional": {
+    "logics": []
+  }
+}

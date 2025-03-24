@@ -1,0 +1,116 @@
+{
+  "layout": [
+    {
+      "id": "vehicle",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": true,
+          "label": "forms.asset.cardName",
+          "placeholder": "screens.asset.nameCardPlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.asset.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "valueAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "value",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.currentValue",
+              "dataType": "number",
+              "formatData": "currency",
+              "minValue": 0,
+              "maxValue": 100000000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "otherAssetsInformation",
+      "label": "forms.asset.otherAssetsInformation",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": "",
+              "options": [],
+              "visible": true,
+              "required": true,
+              "label": "forms.asset.owner",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownerRequired"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "purchasePrice",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.purchasePrice",
+          "dataType": "number",
+          "formatData": "currency",
+          "minValue": 0,
+          "maxValue": 100000000
+        },
+        {
+          "id": "datePurchased",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "visible": true,
+          "label": "forms.asset.datePurchased",
+          "dataType": "date"
+        }
+      ]
+    },
+    {
+      "id": "formNote",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "notes",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.notes",
+          "dataType": "string",
+          "formatData": "",
+          "multiline": true,
+          "returnKeyType": "default"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "data": [
+    { "id": "home", "label": "Home", "children": [] },
+    {
+      "id": "wealth",
+      "label": "Wealth",
+      "children": [
+        { "id": "wealthclock", "label": "WealthCLOCK" },
+        { "id": "wealthspeed", "label": "WealthSPEED" },
+        {
+          "id": "cashflow",
+          "label": "Cashflow",
+          "children": [
+            { "id": "cashflow-dashboard", "label": "Cashflow (Dashboard)" },
+            { "id": "incomespeed", "label": "NetIncomeSPEED" },
+            { "id": "spendingspeed", "label": "SpendingSPEED" },
+            { "id": "savingspeed", "label": "SavingSPEED" },
+            { "id": "workingincomespeed", "label": "WorkingIncomeSPEED" },
+            { "id": "passiveincomespeed", "label": "PassiveIncomeSPEED" },
+            { "id": "rentalincomespeed", "label": "RentalIncomeSpeed" },
+            {
+              "id": "otherinvestmentincomespeed",
+              "label": "OtherInvestmentIncomeSPEED"
+            }
+          ]
+        },
+        {
+          "id": "investments",
+          "label": "Investments",
+          "children": [
+            {
+              "id": "investments-dashboard",
+              "label": "Investments (Dashboard)"
+            },
+            { "id": "nesteggvaluespeed", "label": "NestEggValueSPEED" },
+            {
+              "id": "investmentpropertyvaluespeed",
+              "label": "InvestmentPropertyValueSPEED"
+            },
+            {
+              "id": "otherinvestmentvaluespeed",
+              "label": "OtherInvestmentValueSPEED"
+            },
+            { "id": "superannuationspeed", "label": "SuperannuationSPEED" },
+            {
+              "id": "personalpropertyvaluespeed",
+              "label": "PersonalPropertyValueSPEED"
+            },
+            { "id": "totalassetvaluespeed", "label": "TotalAssetValueSPEED" },
+            { "id": "totaldebtvaluespeed", "label": "TotalDebtValueSPEED" }
+          ]
+        },
+        {
+          "id": "financial-wellbeing",
+          "label": "Financial Wellbeing",
+          "children": [
+            {
+              "id": "financial-wellbeing-dashboard",
+              "label": "Financial Wellbeing (Dashboard)"
+            },
+            { "id": "total-assets", "label": "Total Assets" },
+            { "id": "total-liabilities", "label": "Total Liabilities" },
+            { "id": "debt-to-asset-ratio", "label": "Debt to Asset Ratio" },
+            {
+              "id": "expenditure-to-income-ratio",
+              "label": "Expenditure to Income Ratio"
+            },
+            {
+              "id": "projected-to-retired-passive-income-ratio",
+              "label": "Projected to Retired Passive Income Ratio"
+            },
+            {
+              "id": "financial-wellbeing-grade",
+              "label": "Financial Wellbeing Grade"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "moneysmarts",
+      "label": "MoneySMARTS",
+      "children": [
+        { "id": "jars", "label": "Jars" },
+        { "id": "monthly-check-up", "label": "Monthly Check-Up" },
+        { "id": "monthly-reporting", "label": "Monthly Reporting" }
+      ]
+    },
+    {
+      "id": "financials",
+      "label": "Financials",
+      "children": [
+        {
+          "id": "assets",
+          "label": "Assets",
+          "children": [
+            { "id": "assets-dashboard", "label": "Assets (Dashboard)" },
+            { "id": "bank-account", "label": "Bank Account" },
+            { "id": "property", "label": "Property" },
+            { "id": "investments", "label": "Investments" },
+            { "id": "vehicle", "label": "Vehicle" },
+            { "id": "life-insurance", "label": "Life Insurance" },
+            { "id": "superannuation", "label": "Superannuation" },
+            { "id": "other-assets", "label": "Other Assets" }
+          ]
+        },
+        {
+          "id": "income",
+          "label": "Income",
+          "children": [
+            { "id": "incomedashboard", "label": "Income (Dashboard)" },
+            { "id": "payg-wages", "label": "PAYG Wages" },
+            {
+              "id": "non-active-private-dividends/distributions-income",
+              "label": "(Non-Active) Private Dividends/Distributions Income"
+            },
+            { "id": "self-employed", "label": "Self-Employed" },
+            { "id": "pension", "label": "Pension" },
+            {
+              "id": "govt-–-family-allowance",
+              "label": "Govt – Family Allowance"
+            },
+            { "id": "govt-–-unemployment", "label": "Govt – Unemployment" },
+            {
+              "id": "govt-–-widowed-allowance",
+              "label": "Govt – Widowed Allowance"
+            },
+            { "id": "other-income", "label": "Other Income" },
+            { "id": "property-income", "label": "Property Income" },
+            { "id": "investment-income", "label": "Investment Income" }
+          ]
+        },
+        {
+          "id": "expenses",
+          "label": "Expenses",
+          "children": [
+            { "id": "expenses-dashboard", "label": "Expenses (Dashboard)" },
+            { "id": "bill", "label": "Bill" },
+            { "id": "spending", "label": "Spending" },
+            { "id": "investment-properties", "label": "Investment Properties" },
+            { "id": "investments", "label": "Investments" }
+          ]
+        },
+        {
+          "id": "borrowings",
+          "label": "Borrowings",
+          "children": [
+            { "id": "borrowings-dashboard", "label": "Borrowings (Dashboard)" },
+            { "id": "mortgage", "label": "Mortgage" },
+            { "id": "credit-card", "label": "Credit Card" },
+            { "id": "car-loan", "label": "Car Loan" },
+            { "id": "personal-loan", "label": "Personal Loan" },
+            { "id": "ato-/-centrelink-debt", "label": "ATO / Centrelink Debt" },
+            { "id": "help-/-hec-debt", "label": "HELP / HEC Debt" },
+            { "id": "hire-purchase", "label": "Hire Purchase" },
+            { "id": "lease", "label": "Lease" },
+            { "id": "overdraft", "label": "Overdraft" },
+            { "id": "store-/-charge-card", "label": "Store / Charge Card" },
+            { "id": "court-ruled-debt", "label": "Court Ruled Debt" },
+            { "id": "child-maintenance", "label": "Child Maintenance" },
+            { "id": "other", "label": "Other" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "personal-goals",
+      "label": "Personal Goals",
+      "children": [
+        { "id": "vertical-timeline", "label": "Vertical Timeline" },
+        { "id": "vision-board", "label": "Vision Board" }
+      ]
+    }
+  ]
+}

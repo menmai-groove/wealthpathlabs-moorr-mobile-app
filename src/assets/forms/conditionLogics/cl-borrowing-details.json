@@ -1,0 +1,812 @@
+{
+  "logics": [
+    {
+      "type": "visible",
+      "field": "ownershipSplitPerson1",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Joint",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Other",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "ownershipSplitPerson2",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Joint",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Other",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "otherBorrowerPercentage",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "ownership",
+            "value": "Other",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "totalPercent",
+      "fields": [
+        "ownershipSplitPerson1",
+        "ownershipSplitPerson2",
+        "otherBorrowerPercentage"
+      ],
+      "value": 100,
+      "condition": {
+        "operator": "AND",
+        "condition": []
+      }
+    },
+    {
+      "type": "visible",
+      "field": "otherProvider",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "provider",
+            "value": "Other",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "originalAmount",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Overdraft",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Charge Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Store Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Child Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "loanStartDate",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Court Ruled Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Charge Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Store Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Overdraft",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "term",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Overdraft",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Charge Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Store Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Court Ruled Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Child Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "loanExpiryDate",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Overdraft",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Charge Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Store Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Court Ruled Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Child Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "fixedTerm",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Investment Loan - Fixed Rate",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Home Loan - Fixed Rate",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "fixedRateEndDate",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Investment Loan - Fixed Rate",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Home Loan - Fixed Rate",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "limit",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Charge Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Store Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Child Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Court Ruled Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Overdraft",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "limitAsAt",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Charge Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Store Card",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Child Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Court Ruled Debt",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Overdraft",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "upfrontFees",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Child Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Maintenance",
+            "key": "value"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "isLMI",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "LMI",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "isLMI",
+            "value": true
+          },
+          {
+            "type": "visible",
+            "field": "isLMI",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "properties",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "primaryPurpose",
+            "value": "Buy Real Estate",
+            "key": "value"
+          },
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "purposeAsAt",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "primaryPurpose",
+            "value": "Buy Real Estate",
+            "key": "value"
+          },
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "securedAgainst",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Car Loan",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "securedAgainstAsAt",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Car Loan",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "repaymentType",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "repaymentTypeAsAt",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "interestOnlyExpiryDate",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Mortgage",
+            "key": "tags"
+          },
+          {
+            "type": "=",
+            "field": "repaymentType",
+            "value": "Interest Only",
+            "key": "value"
+          },
+          {
+            "type": "visible",
+            "field": "repaymentType",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "autosweep",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "setValue",
+      "field": "loanExpiryDate",
+      "format": "datetime",
+      "condition": {
+        "operator": "ADD",
+        "condition": [
+          {
+            "type": "input",
+            "field": "loanStartDate"
+          },
+          {
+            "type": "amount",
+            "field": "term",
+            "component": "dropdown",
+            "unit": "years"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "offsetAccount",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Investment Loan - Fixed Rate",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Home Loan - Fixed Rate",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "offsetsAsAt",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Investment Loan - Fixed Rate",
+            "key": "label"
+          },
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "Home Loan - Fixed Rate",
+            "key": "label"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "interestRateAsAt",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "interestRate",
+      "value": false,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "=",
+            "field": "loanType",
+            "value": "HECS/HELP Debt",
+            "key": "value"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "isTrackedInMoneySmartsAsAt",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Credit Card",
+            "key": "value"
+          },
+          {
+            "type": "include",
+            "field": "loanType",
+            "value": "Line of Credit",
+            "key": "value"
+          }
+        ]
+      }
+    }
+  ]
+}

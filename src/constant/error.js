@@ -1,0 +1,15 @@
+export default {
+  unAuthenticated: 'unAuthenticated',
+  notFoundError: 'notFoundError',
+  notPermission: 'notPermission',
+  requestConflict: 'requestConflict',
+  requestTimeout: 'requestTimeout',
+  internalServerError: 'internalServerError',
+  clientError: 'clientError',
+  fetchAPIError: 'fetchAPIError',
+  badRequest: 'badRequest',
+  validatorError: 'ValidatorError',
+  networkRequestFailed: 'Network request failed',
+  closedRollover: 'closed-rollover',
+  startDateExisted: 'start-date-existed',
+};

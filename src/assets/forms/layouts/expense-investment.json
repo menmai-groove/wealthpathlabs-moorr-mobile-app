@@ -1,0 +1,92 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "annualAmount",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "readonly": true,
+          "dataType": "string",
+          "label": "forms.expense.annualAmount",
+          "formatData": "currency",
+          "keyboardType": "numeric",
+          "placeholder": "",
+          "validation": []
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "label": "forms.expense.detailLabel",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "investmentAssetName",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "readonly": true,
+          "placeholder": "forms.expense.investmentAssetName",
+          "label": "forms.expense.investmentAssetName",
+          "dataType": "string"
+        },
+        {
+          "id": "assetLink",
+          "component": "custom-component",
+          "value": "",
+          "label": "",
+          "visible": true,
+          "dataType": "string"
+        },
+        {
+          "id": "ownership",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "required": true,
+          "visible": true,
+          "disabled": true,
+          "label": "forms.expense.ownership",
+          "__placeholder": "forms.expense.ownershipRequired",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.expense.ownershipRequired"
+            }
+          ]
+        },
+        {
+          "id": "isTaxDeductable",
+          "component": "radio",
+          "value": true,
+          "visible": true,
+          "readonly": true,
+          "label": "forms.expense.taxDeductible",
+          "dataType": "boolean"
+        }
+      ]
+    },
+    {
+      "id": "expenseBreakdown",
+      "label": "forms.expense.expenseBreakdownLabel",
+      "component": "collapse",
+      "collapse": false,
+      "visible": true,
+      "fields": [
+        {
+          "id": "holdingCosts",
+          "component": "custom-component",
+          "value": "",
+          "required": false,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

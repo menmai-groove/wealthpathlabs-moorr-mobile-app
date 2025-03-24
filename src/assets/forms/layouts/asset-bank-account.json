@@ -1,0 +1,251 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": true,
+          "label": "forms.asset.cardName",
+          "placeholder": "screens.asset.nameCardPlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.asset.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "balanceAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "balance",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.currentBalance",
+              "dataType": "number",
+              "formatData": "currency",
+              "minValue": 0,
+              "maxValue": 100000000
+            }
+          ]
+        },
+        {
+          "id": "accountType",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.accountType",
+          "__placeholder": "forms.asset.accountTypePlaceholder"
+        },
+        {
+          "id": "otherType",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.asset.otherType",
+          "dataType": "string",
+          "formatData": ""
+        },
+        {
+          "id": "isPrimary",
+          "component": "switch",
+          "value": false,
+          "visible": true,
+          "label": "forms.asset.primaryBankAccount",
+          "dataType": "boolean"
+        }
+      ]
+    },
+    {
+      "id": "accountInformation",
+      "label": "forms.asset.accountInformation",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "visible": true,
+              "required": true,
+              "label": "forms.asset.owner",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownerRequired"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "institution",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.institution",
+          "__placeholder": "forms.asset.institutionPlaceholder"
+        },
+        {
+          "id": "interestRateAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "interestRate",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.interestRate",
+              "maxValue": 100,
+              "dataType": "number",
+              "iconRight": "percent"
+            }
+          ]
+        },
+        {
+          "id": "last4",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.asset.last4DigitsOfAccountNumber",
+          "dataType": "integer",
+          "keyboardType": "numeric",
+          "minValue": 0,
+          "validation": [
+            {
+              "type": "maxChar",
+              "number": 4,
+              "message": "forms.asset.maxOf4Characters"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "formNote",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "isTrackedInMoneySmartsAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "isTrackedInMoneySmarts",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "visible": true,
+              "label": "forms.bank.isTrackedInMoneySmarts",
+              "validation": []
+            }
+          ]
+        },
+        {
+          "id": "notes",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.notes",
+          "dataType": "string",
+          "formatData": "",
+          "multiline": true,
+          "returnKeyType": "default"
+        }
+      ]
+    }
+  ],
+  "conditional": {
+    "logics": [
+      {
+        "type": "visible",
+        "field": "otherType",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "accountType",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "last4",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "accountType",
+              "value": "Offset",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "interestRate",
+        "value": false,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "accountType",
+              "value": "Offset",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "interestRateAsAt",
+        "value": false,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "accountType",
+              "value": "Offset",
+              "key": "label"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

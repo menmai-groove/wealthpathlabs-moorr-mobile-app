@@ -1,0 +1,778 @@
+version: 2.1
+
+# Here is list environment using in this workflow
+#   ProjectSettings
+#     - CONFIG_ENCRYPTED_KEY
+#     - XCODE_CERTIFICATE_PASSWORD
+#     - KEYCHAIN_PASSWORD
+#     - SLACK_CHANNEL
+#     - SLACK_URL
+#   Fastlane Context
+#     - FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD
+#     - FASTLANE_PASSWORD
+#     - FASTLANE_SESSION
+#     - FIREBASE_CLI_TOKEN
+#   AppCenter Context
+#     - APP_CENTER_LOGIN_TOKEN
+
+parameters:
+  COMMANDS:
+    type: enum
+    enum:
+      [
+        '',
+
+        'codepush_Development_Android',
+        'codepush_Development_iOS',
+        'codepush_Development_Both',
+        'deploy_Development_Android',
+        'deploy_Development_iOS',
+        'deploy_Development_Both',
+
+        'codepush_Staging_Android',
+        'codepush_Staging_iOS',
+        'codepush_Staging_Both',
+        'deploy_Staging_Android',
+        'deploy_Staging_iOS',
+        'deploy_Staging_Both',
+
+        'codepush_Production_Android',
+        'codepush_Production_iOS',
+        'codepush_Production_Both',
+        'deploy_Production_Android',
+        'deploy_Production_iOS',
+        'deploy_Production_Both',
+      ]
+    description: Command.
+
+    default: ''
+
+commands:
+  deploy_app:
+    description: 'A command to deploy app'
+    parameters:
+      fastlane_action:
+        type: string
+        default: ''
+      platform:
+        type: enum
+        default: 'Android'
+        enum: ['Android', 'iOS']
+    steps:
+      - run:
+          working_directory: ~/mywealth-app
+          name: Deploy app
+          command: PLATFORM=<< parameters.platform >> FASTLANE_ACTION=<< parameters.fastlane_action >> bash ./.build-scripts/build_app.sh
+
+  config_env:
+    description: 'A command to setup environment'
+    parameters:
+      deployment_target:
+        type: string
+        default: ''
+      encrypted_key:
+        type: string
+        default: ''
+    steps:
+      - run:
+          working_directory: ~/mywealth-app
+          name: Setup environment
+          command: |
+            DEPLOYMENT_TARGET=<< parameters.deployment_target >> ENCRYPTED_KEY=<< parameters.encrypted_key >> bash ./.build-scripts/config.sh
+
+  setup_git_credential:
+    description: 'A command to setup git credential'
+    parameters:
+      git_author_email:
+        type: string
+        default: ''
+      git_author_name:
+        type: string
+        default: ''
+    steps:
+      - run:
+          working_directory: ~/mywealth-app
+          name: Setup git credential
+          command: |
+            mkdir -p ~/.ssh
+            ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+            git config --global user.email << parameters.git_author_email >>
+            git config --global user.name << parameters.git_author_name >>
+            ssh -T git@bitbucket.org
+
+jobs:
+  node:
+    working_directory: ~/mywealth-app
+    docker:
+      - image: cimg/node:18.17.1
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'ff:32:79:cc:15:cc:e3:ed:4f:d6:85:4c:19:70:6d:b6'
+
+      - checkout
+
+      # - config_env:
+      #     encrypted_key: $CONFIG_ENCRYPTED_KEY
+      #     deployment_target: << pipeline.parameters.DEPLOYMENT_TARGET >>
+      - run:
+          name: Config environment
+          command: |
+            if [[ "$COMMANDS" == "codepush_Production_Android" ]]; then
+              DEPLOYMENT_TARGET="Production"
+            elif [[ "$COMMANDS" == "codepush_Production_iOS" ]]; then
+              DEPLOYMENT_TARGET="Production"
+            elif [[ "$COMMANDS" == "codepush_Production_Both" ]]; then
+              DEPLOYMENT_TARGET="Production"
+            elif [[ "$COMMANDS" == "deploy_Production_Android" ]]; then
+              DEPLOYMENT_TARGET="Production"
+            elif [[ "$COMMANDS" == "deploy_Production_iOS" ]]; then
+              DEPLOYMENT_TARGET="Production"
+            elif [[ "$COMMANDS" == "deploy_Production_Both" ]]; then
+              DEPLOYMENT_TARGET="Production"
+
+            elif [[ "$COMMANDS" == "codepush_Staging_Android" ]]; then
+              DEPLOYMENT_TARGET="Staging"
+            elif [[ "$COMMANDS" == "codepush_Staging_iOS" ]]; then
+              DEPLOYMENT_TARGET="Staging"
+            elif [[ "$COMMANDS" == "codepush_Staging_Both" ]]; then
+              DEPLOYMENT_TARGET="Staging"
+            elif [[ "$COMMANDS" == "deploy_Staging_Android" ]]; then
+              DEPLOYMENT_TARGET="Staging"
+            elif [[ "$COMMANDS" == "deploy_Staging_iOS" ]]; then
+              DEPLOYMENT_TARGET="Staging"
+            elif [[ "$COMMANDS" == "deploy_Staging_Both" ]]; then
+              DEPLOYMENT_TARGET="Staging"
+
+            elif [[ "$COMMANDS" == "codepush_Development_Android" ]]; then
+              DEPLOYMENT_TARGET="Development"
+            elif [[ "$COMMANDS" == "codepush_Development_iOS" ]]; then
+              DEPLOYMENT_TARGET="Development"
+            elif [[ "$COMMANDS" == "codepush_Development_Both" ]]; then
+              DEPLOYMENT_TARGET="Development"
+            elif [[ "$COMMANDS" == "deploy_Development_Android" ]]; then
+              DEPLOYMENT_TARGET="Development"
+            elif [[ "$COMMANDS" == "deploy_Development_iOS" ]]; then
+              DEPLOYMENT_TARGET="Development"
+            elif [[ "$COMMANDS" == "deploy_Development_Both" ]]; then
+              DEPLOYMENT_TARGET="Development"
+
+            else
+              DEPLOYMENT_TARGET="Development"
+            fi
+
+            ENCRYPTED_KEY=$CONFIG_ENCRYPTED_KEY
+
+            echo "Command: $COMMANDS"
+            echo "Modified Deployment Target: $DEPLOYMENT_TARGET"
+            echo "Config Encrypted Key Target: $CONFIG_ENCRYPTED_KEY"
+            echo "Encrypted Key Target: $ENCRYPTED_KEY"
+            DEPLOYMENT_TARGET=$DEPLOYMENT_TARGET ENCRYPTED_KEY=$ENCRYPTED_KEY bash ./.build-scripts/config.sh
+          environment:
+            COMMANDS: '<< pipeline.parameters.COMMANDS >>'
+
+      - run:
+          name: patch-package hash
+          command: md5sum patches/* > patches.hash
+
+      - restore_cache:
+          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "patches.hash" }}-{{ arch }}
+
+      - run:
+          name: Install dependencies for `canvas`
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+
+      - run:
+          name: Installing Dependencies
+          command: npm install
+
+      - save_cache:
+          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "patches.hash" }}-{{ arch }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Run tests
+          command: npm run lint-test
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  ios-build:
+    working_directory: ~/mywealth-app
+    macos:
+      xcode: 16.0.0
+    environment:
+      LC_ALL: 'en_US.UTF-8'
+      LANG: 'en_US.UTF-8'
+    steps:
+      - attach_workspace:
+          at: ~/mywealth-app
+
+      - run: curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o ios/fastlane/AppleWWDRCAG3.cer
+
+      - setup_git_credential:
+          git_author_email: $GIT_AUTHOR_EMAIL
+          git_author_name: $GIT_AUTHOR_NAME
+
+      - restore_cache:
+          key: bundle-v1-{{ .Branch }}-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+
+      - restore_cache:
+          key: pods-v1-{{ .Branch }}-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+
+      - run:
+          command: pod install
+          working_directory: ios
+
+      - run:
+          command: sudo bundle install
+          working_directory: ios
+
+      - run:
+          name: Installing AppCenter CLI
+          command: sudo npm install -g appcenter-cli
+
+      - run:
+          name: Installing fastlane-plugin-codepush locally
+          command: sudo gem install ./fastlane-plugin-codepush/fastlane-plugin-codepush-0.2.2.gem
+          working_directory: plugins
+
+      - run:
+          name: Install dependencies for Fastlane
+          command: |
+            # Install ncurses to fix terminfo error
+            brew install ncurses
+
+            # Install/Update fastlane
+            sudo gem install fastlane --no-document
+
+      - save_cache:
+          key: bundle-v1-{{ .Branch }}-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - ios/vendor/bundle
+
+      - save_cache:
+          key: pods-v1-{{ .Branch }}-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ios/Pods
+
+      # - run:
+      #     name: Remove Watchman watches
+      #     command: watchman watch-del-all
+
+      # - run:
+      #     name: Shutdown Watchman server
+      #     command: watchman shutdown-server
+
+      # - deploy_app:
+      #     fastlane_action: << pipeline.parameters.FASTLANE_ACTION >>
+      #     platform: 'iOS'
+      - run:
+          name: Deploy app
+          command: |
+            if [[ "$COMMANDS" == "codepush_Production_Android" ]]; then
+              DEPLOYMENT_TARGET="codepush"
+            elif [[ "$COMMANDS" == "codepush_Production_iOS" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Production_Both" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "deploy_Production_Android" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Production_iOS" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Production_Both" ]]; then
+              FASTLANE_ACTION="deploy"
+
+            elif [[ "$COMMANDS" == "codepush_Staging_Android" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Staging_iOS" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Staging_Both" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "deploy_Staging_Android" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Staging_iOS" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Staging_Both" ]]; then
+              FASTLANE_ACTION="deploy"
+
+            elif [[ "$COMMANDS" == "codepush_Development_Android" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Development_iOS" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Development_Both" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "deploy_Development_Android" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Development_iOS" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Development_Both" ]]; then
+              FASTLANE_ACTION="deploy"
+
+            else
+              FASTLANE_ACTION="build"
+            fi
+
+            echo "Command: $COMMANDS"
+            echo "Modified Fastlane Action: $FASTLANE_ACTION"
+            PLATFORM=$PLATFORM FASTLANE_ACTION=$FASTLANE_ACTION bash ./.build-scripts/build_app.sh
+          environment:
+            COMMANDS: '<< pipeline.parameters.COMMANDS >>'
+            PLATFORM: 'iOS'
+
+  android-build:
+    working_directory: ~/mywealth-app
+    docker:
+      - image: cimg/android:2023.08
+    steps:
+      - attach_workspace:
+          at: ~/mywealth-app
+
+      - run: curl -sL https://firebase.tools | bash
+
+      - setup_git_credential:
+          git_author_email: $GIT_AUTHOR_EMAIL
+          git_author_name: $GIT_AUTHOR_NAME
+
+      - restore_cache:
+          key: bundle-v1-{{ .Branch }}-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
+
+      - run:
+          command: sudo bundle install
+          working_directory: android
+
+      - run:
+          name: Install Node.js and npm
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
+          name: Check Node.js and npm versions
+          command: |
+            node -v
+            npm -v
+
+      - run:
+          name: Installing AppCenter CLI
+          command: sudo npm install -g appcenter-cli
+
+      - run:
+          name: Installing fastlane-plugin-codepush locally
+          command: sudo gem install ./fastlane-plugin-codepush/fastlane-plugin-codepush-0.2.2.gem
+          working_directory: plugins
+
+      - save_cache:
+          key: bundle-v1-{{ .Branch }}-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - android/vendor/bundle
+
+      # - deploy_app:
+      #     fastlane_action: << pipeline.parameters.FASTLANE_ACTION >>
+      #     platform: 'Android'
+      - run:
+          name: Deploy app
+          command: |
+            if [[ "$COMMANDS" == "codepush_Production_Android" ]]; then
+              DEPLOYMENT_TARGET="codepush"
+            elif [[ "$COMMANDS" == "codepush_Production_iOS" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Production_Both" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "deploy_Production_Android" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Production_iOS" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Production_Both" ]]; then
+              FASTLANE_ACTION="deploy"
+
+            elif [[ "$COMMANDS" == "codepush_Staging_Android" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Staging_iOS" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Staging_Both" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "deploy_Staging_Android" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Staging_iOS" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Staging_Both" ]]; then
+              FASTLANE_ACTION="deploy"
+
+            elif [[ "$COMMANDS" == "codepush_Development_Android" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Development_iOS" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "codepush_Development_Both" ]]; then
+              FASTLANE_ACTION="codepush"
+            elif [[ "$COMMANDS" == "deploy_Development_Android" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Development_iOS" ]]; then
+              FASTLANE_ACTION="deploy"
+            elif [[ "$COMMANDS" == "deploy_Development_Both" ]]; then
+              FASTLANE_ACTION="deploy"
+
+            else
+              FASTLANE_ACTION="build"
+            fi
+
+            echo "Command: $COMMANDS"
+            echo "Platform: $PLATFORM"
+            echo "Modified Fastlane Action: $FASTLANE_ACTION"
+            PLATFORM=$PLATFORM FASTLANE_ACTION=$FASTLANE_ACTION bash ./.build-scripts/build_app.sh
+          environment:
+            COMMANDS: '<< pipeline.parameters.COMMANDS >>'
+            PLATFORM: 'Android'
+
+workflows:
+  node-ios:
+    when:
+      or:
+        - equal: [codepush_Development_iOS, << pipeline.parameters.COMMANDS >>]
+        - equal: [codepush_Development_Both, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Development_iOS, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Development_Both, << pipeline.parameters.COMMANDS >>]
+
+        - equal: [codepush_Staging_iOS, << pipeline.parameters.COMMANDS >>]
+        - equal: [codepush_Staging_Both, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Staging_iOS, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Staging_Both, << pipeline.parameters.COMMANDS >>]
+
+        - equal: [codepush_Production_iOS, << pipeline.parameters.COMMANDS >>]
+        - equal: [codepush_Production_Both, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Production_iOS, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Production_Both, << pipeline.parameters.COMMANDS >>]
+    jobs:
+      - node
+
+      - ios-build:
+          context:
+            - Fastlane
+            - AppCenter
+          requires:
+            - node
+
+  node-android:
+    when:
+      or:
+        - equal: [codepush_Development_Android, << pipeline.parameters.COMMANDS >>]
+        - equal: [codepush_Development_Both, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Development_Android, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Development_Both, << pipeline.parameters.COMMANDS >>]
+
+        - equal: [codepush_Staging_Android, << pipeline.parameters.COMMANDS >>]
+        - equal: [codepush_Staging_Both, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Staging_Android, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Staging_Both, << pipeline.parameters.COMMANDS >>]
+
+        - equal: [codepush_Production_Android, << pipeline.parameters.COMMANDS >>]
+        - equal: [codepush_Production_Both, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Production_Android, << pipeline.parameters.COMMANDS >>]
+        - equal: [deploy_Production_Both, << pipeline.parameters.COMMANDS >>]
+    jobs:
+      - node
+
+      - android-build:
+          context:
+            - Fastlane
+            - AppCenter
+          requires:
+            - node
+# version: 2.1
+
+# # Here is list environment using in this workflow
+# #   ProjectSettings
+# #     - CONFIG_ENCRYPTED_KEY
+# #     - XCODE_CERTIFICATE_PASSWORD
+# #     - KEYCHAIN_PASSWORD
+# #     - SLACK_CHANNEL
+# #     - SLACK_URL
+# #   Fastlane Context
+# #     - FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD
+# #     - FASTLANE_PASSWORD
+# #     - FASTLANE_SESSION
+# #     - FIREBASE_CLI_TOKEN
+# #   AppCenter Context
+# #     - APP_CENTER_LOGIN_TOKEN
+
+# parameters:
+#   FASTLANE_ACTION:
+#     type: enum
+#     enum: ['build', 'codepush', 'deploy']
+#     description: Fastlane action.
+
+#     default: 'codepush'
+
+#   DEPLOYMENT_TARGET:
+#     type: enum
+#     enum: ['Development', 'Staging', 'Production']
+#     description: Deployment Target.
+
+#     default: 'Development'
+
+#   PLATFORM:
+#     type: enum
+#     enum: ['Android', 'iOS']
+#     description: Platform.
+
+#     default: 'Android'
+
+#   MANUAL_BUILD:
+#     type: boolean
+#     description: Manual build.
+
+#     default: false
+
+# commands:
+#   deploy_app:
+#     description: 'A command to deploy app'
+#     parameters:
+#       fastlane_action:
+#         type: string
+#         default: ''
+#       platform:
+#         type: enum
+#         default: 'Android'
+#         enum: ['Android', 'iOS']
+#     steps:
+#       - run:
+#           working_directory: ~/mywealth-app
+#           name: Deploy app
+#           command: PLATFORM=<< parameters.platform >> FASTLANE_ACTION=<< parameters.fastlane_action >> bash ./.build-scripts/build_app.sh
+
+#   config_env:
+#     description: 'A command to setup environment'
+#     parameters:
+#       deployment_target:
+#         type: string
+#         default: ''
+#       encrypted_key:
+#         type: string
+#         default: ''
+#     steps:
+#       - run:
+#           working_directory: ~/mywealth-app
+#           name: Setup environment
+#           command: |
+#             DEPLOYMENT_TARGET=<< parameters.deployment_target >> ENCRYPTED_KEY=<< parameters.encrypted_key >> bash ./.build-scripts/config.sh
+
+#   setup_git_credential:
+#     description: 'A command to setup git credential'
+#     parameters:
+#       git_author_email:
+#         type: string
+#         default: ''
+#       git_author_name:
+#         type: string
+#         default: ''
+#     steps:
+#       - run:
+#           working_directory: ~/mywealth-app
+#           name: Setup git credential
+#           command: |
+#             mkdir -p ~/.ssh
+#             ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+#             git config --global user.email << parameters.git_author_email >>
+#             git config --global user.name << parameters.git_author_name >>
+#             ssh -T git@bitbucket.org
+
+# jobs:
+#   node:
+#     working_directory: ~/mywealth-app
+#     docker:
+#       - image: cimg/node:16.14.2
+
+#     steps:
+#       - add_ssh_keys:
+#           fingerprints:
+#             - 'ff:32:79:cc:15:cc:e3:ed:4f:d6:85:4c:19:70:6d:b6'
+
+#       - checkout
+
+#       - config_env:
+#           encrypted_key: $CONFIG_ENCRYPTED_KEY
+#           deployment_target: << pipeline.parameters.DEPLOYMENT_TARGET >>
+
+#       - run:
+#           name: patch-package hash
+#           command: md5sum patches/* > patches.hash
+
+#       - restore_cache:
+#           key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "patches.hash" }}-{{ arch }}
+
+#       - run:
+#           name: Installing Dependencies
+#           command: npm install
+
+#       - save_cache:
+#           key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum "patches.hash" }}-{{ arch }}
+#           paths:
+#             - node_modules
+
+#       - run:
+#           name: Run tests
+#           command: npm run lint-test
+
+#       - persist_to_workspace:
+#           root: .
+#           paths:
+#             - .
+
+#       # - store_test_results:
+#       #     path: test-results
+#       # - store_artifacts:
+#       #     path: test-results
+
+#   ios-build:
+#     working_directory: ~/mywealth-app
+#     macos:
+#       xcode: 14.2.0
+#     environment:
+#       LC_ALL: 'en_US.UTF-8'
+#       LANG: 'en_US.UTF-8'
+#     steps:
+#       - attach_workspace:
+#           at: ~/mywealth-app
+
+#       - run: curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o ios/fastlane/AppleWWDRCAG3.cer
+
+#       - run: nvm install 16.14.2 && nvm alias default 16.14.2
+
+#       - setup_git_credential:
+#           git_author_email: $GIT_AUTHOR_EMAIL
+#           git_author_name: $GIT_AUTHOR_NAME
+
+#       - restore_cache:
+#           key: bundle-v1-{{ .Branch }}-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+
+#       - restore_cache:
+#           key: pods-v1-{{ .Branch }}-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+
+#       - run:
+#           command: pod install
+#           working_directory: ios
+
+#       - run:
+#           command: sudo bundle install
+#           working_directory: ios
+
+#       - run:
+#           name: Installing AppCenter CLI
+#           command: sudo npm install -g appcenter-cli
+
+#       - run:
+#           name: Installing fastlane-plugin-codepush locally
+#           # command: sudo gem install ./fastlane-plugin-codepush/fastlane-plugin-codepush-0.2.2.gem
+#           command: sudo gem install ./fastlane-plugin-codepush/fastlane-plugin-codepush-0.2.2.gem
+#           working_directory: plugins
+
+#       - save_cache:
+#           key: bundle-v1-{{ .Branch }}-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+#           paths:
+#             - ios/vendor/bundle
+
+#       - save_cache:
+#           key: pods-v1-{{ .Branch }}-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+#           paths:
+#             - ios/Pods
+
+#       - deploy_app:
+#           fastlane_action: << pipeline.parameters.FASTLANE_ACTION >>
+#           platform: 'iOS'
+
+#   android-build:
+#     working_directory: ~/mywealth-app
+#     docker:
+#       - image: cimg/android:2022.04-node
+#     steps:
+#       - attach_workspace:
+#           at: ~/mywealth-app
+
+#       - run: curl -sL https://firebase.tools | bash
+
+#       - setup_git_credential:
+#           git_author_email: $GIT_AUTHOR_EMAIL
+#           git_author_name: $GIT_AUTHOR_NAME
+
+#       - restore_cache:
+#           key: bundle-v1-{{ .Branch }}-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
+
+#       - run:
+#           command: sudo bundle install
+#           working_directory: android
+
+#       - run:
+#           name: Installing AppCenter CLI
+#           command: sudo npm install -g appcenter-cli
+
+#       - run:
+#           name: Installing fastlane-plugin-codepush locally
+#           # command: sudo gem install ./fastlane-plugin-codepush/fastlane-plugin-codepush-0.2.2.gem
+#           command: sudo gem install ./fastlane-plugin-codepush/fastlane-plugin-codepush-0.2.2.gem
+#           working_directory: plugins
+
+#       - save_cache:
+#           key: bundle-v1-{{ .Branch }}-{{ checksum "android/Gemfile.lock" }}-{{ arch }}
+#           paths:
+#             - android/vendor/bundle
+
+#       - deploy_app:
+#           fastlane_action: << pipeline.parameters.FASTLANE_ACTION >>
+#           platform: 'Android'
+
+# workflows:
+#   node-ios:
+#     when:
+#       and:
+#         - equal: [true, << pipeline.parameters.MANUAL_BUILD >>]
+#         - equal: [iOS, << pipeline.parameters.PLATFORM >>]
+#     jobs:
+#       - node
+#       # filters:
+#       #   branches:
+#       #     only:
+#       #       - feature/circle-ci
+#       #       # - /^release\/[0-9]+(\.[0-9]+)+(\.[0-9]+)*$/
+
+#       - ios-build:
+#           # filters:  # using regex filters requires the entire branch to match
+#           #   branches:
+#           #     only:
+#           #       - feature/circle-ci
+#           #       # - /^release\/[0-9]+(\.[0-9]+)+(\.[0-9]+)*$/
+#           context:
+#             - Fastlane
+#             - AppCenter
+#           requires:
+#             - node
+
+#   node-android:
+#     when:
+#       and:
+#         - equal: [true, << pipeline.parameters.MANUAL_BUILD >>]
+#         - equal: [Android, << pipeline.parameters.PLATFORM >>]
+#     jobs:
+#       - node
+#       # filters:
+#       #   branches:
+#       #     only:
+#       #       - feature/circle-ci
+#       #       # - /^release\/[0-9]+(\.[0-9]+)+(\.[0-9]+)*$/
+
+#       - android-build:
+#           # filters:  # using regex filters requires the entire branch to match
+#           #   branches:
+#           #     only:
+#           #       - feature/circle-ci
+#           #       # - /^release\/[0-9]+(\.[0-9]+)+(\.[0-9]+)*$/
+#           context:
+#             - Fastlane
+#             - AppCenter
+#           requires:
+#             - node

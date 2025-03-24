@@ -1,0 +1,2 @@
+json_key_file "fastlane/service_account.json"
+app_identifier "{{cookiecutter.android_bundle_id}}" # e.g. com.krausefx.app

@@ -1,0 +1,16 @@
+import dynamic from '@redux-dynostore/react-redux';
+import { attachReducer, dispatchAction } from '@redux-dynostore/core';
+import { runSaga } from '@redux-dynostore/redux-saga';
+import reducer from './reducer';
+import saga from './saga';
+import { defaultAction } from './action';
+
+const getModule = ({ identifier }) =>
+  dynamic(
+    identifier,
+    attachReducer(reducer),
+    runSaga(saga),
+    dispatchAction(defaultAction()),
+  );
+
+export default getModule;

@@ -1,0 +1,67 @@
+{
+  "logics": [
+    {
+      "type": "setValue",
+      "field": "totalAmount",
+      "format": "number",
+      "condition": {
+        "operator": "SUM",
+        "condition": [
+          {
+            "field": "essentialAmount"
+          },
+          {
+            "type": "positive",
+            "field": "discretionaryAmount"
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "ownership",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "isTaxDeductable",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "ownershipAsAt",
+      "value": true,
+      "condition": {
+        "operator": "AND",
+        "condition": [
+          {
+            "type": "=",
+            "field": "isTaxDeductable",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "visible",
+      "field": "billPaymentReminder",
+      "value": true,
+      "condition": {
+        "operator": "OR",
+        "condition": [
+          {
+            "type": "include",
+            "field": "type",
+            "value": "Rent",
+            "key": "value"
+          }
+        ]
+      }
+    }
+  ]
+}

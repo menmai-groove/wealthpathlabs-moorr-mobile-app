@@ -1,0 +1,165 @@
+default_platform(:android)
+
+firebase_cli_token = ENV["FIREBASE_CLI_TOKEN"]
+appcenter_token = ENV["APP_CENTER_LOGIN_TOKEN"]
+appcenter_app_name = ENV["APP_CENTER_APP_NAME"]
+appcenter_deployment_name = ENV["APP_CENTER_DEPLOYMENT"]
+appcenter_private_key_path = ENV["APP_CENTER_PRIVATE_KEY_PATH"]
+app_name = ENV["APP_NAME"]
+slack_url = ENV["SLACK_URL"]
+slack_channel = ENV["SLACK_CHANNEL"]
+bundle_id = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+
+platform :android do
+  desc "Run build"
+  lane :build do
+    gradle(task: "assembleRelease")
+  end
+
+  desc "Push a new bundle release to CodePush"
+  lane :codepush do
+    begin
+      version_name = android_get_version_name
+
+      begin
+        build_number = google_play_track_version_codes(
+          package_name: bundle_id,
+          track: 'internal'
+        )
+        new_build_number = build_number.first
+      rescue => error
+        new_build_number = android_get_version_code
+      end
+
+      android_set_version_code(version_code: new_build_number)
+      release_vesion = "ota-#{app_name}-#{bundle_id}-v#{version_name}-beta.#{new_build_number}.#{Time.now.to_i}"
+
+      gradle(task: "clean")
+      codepush_login(login_token: appcenter_token)
+      codepush_release_react(
+        app_name: appcenter_app_name,
+        deployment_name: appcenter_deployment_name,
+        private_key_path: appcenter_private_key_path,
+        execution_dir_path: "../",
+        mandatory: true
+      )
+      codepush_logout
+
+      git_tag(release_vesion)
+      slack_codepush_success(release_vesion, app_name, slack_channel, slack_url)
+    rescue => error
+      slack_error(error.message[0..200], app_name, slack_channel, slack_url)
+    end
+  end
+
+  desc "Push a new release build to the Play Store"
+  lane :deploy do
+    begin
+      version_name = android_get_version_name
+
+      begin
+        build_number = google_play_track_version_codes(
+          package_name: bundle_id,
+          track: 'internal'
+        )
+        new_build_number = build_number.first + 1
+        trackOnStore = true
+      rescue => error
+        new_build_number = android_get_version_code
+        trackOnStore = false
+      end
+
+      android_set_version_code(version_code: new_build_number)
+      release_vesion = "#{app_name}-#{bundle_id}-v#{version_name}-beta.#{new_build_number}"
+
+      gradle(tasks: ["clean", "assembleRelease", "bundleRelease"])
+
+      distribute_to_firebase(bundle_id, release_vesion, firebase_cli_token)
+
+      if trackOnStore == true
+        upload_to_play_store(
+          track: 'internal',
+          skip_upload_apk: true,
+          package_name: "#{bundle_id}",
+          version_code: new_build_number.to_i,
+          skip_upload_changelogs: true,
+          skip_upload_metadata: true,
+          skip_upload_images: true,
+          skip_upload_screenshots: true,
+          release_status: "draft",
+          timeout: 600
+        )
+      end
+      git_tag(release_vesion)
+      slack_success(release_vesion, app_name, slack_channel, slack_url)
+    rescue => error
+      slack_error(error.message[0..200], app_name, slack_channel, slack_url)
+    end
+  end
+
+  def distribute_to_firebase(bundle_id, release_vesion, firebase_cli_token)
+    firebase_app_id = find_firebase_app_id(app_identifier: "#{bundle_id}")
+    firebase_app_distribution(
+      app: "#{firebase_app_id}",
+      android_artifact_type: "APK",
+      testers: "groove.app.tester@gmail.com",
+      groups: "internal-testers, ew-testers",
+      firebase_cli_token: firebase_cli_token,
+      release_notes: "release #{release_vesion}"
+    )
+  end
+
+  def git_tag(release_vesion)
+    git_add(path: "*")
+    add_git_tag(
+      tag: release_vesion
+    )
+    push_git_tags
+    reset_git_repo(force: true, disregard_gitignore: false)
+  end
+
+  def slack_success(release_vesion, app_name, slack_channel, slack_url)
+    slack(
+      message: "New App version successfully released!",
+      channel: "##{slack_channel}",
+      success: true,
+      payload: {
+        "App Version" => release_vesion,
+        "App Name" => app_name,
+        "Platform" => "Android",
+        "Build Date" => Time.new.to_s,
+      },
+      slack_url: slack_url
+    )
+  end
+
+  def slack_codepush_success(release_vesion, app_name, slack_channel, slack_url)
+    slack(
+      message: "New CodePush Released!",
+      channel: "##{slack_channel}",
+      success: true,
+      payload: {
+        "App Version" => release_vesion,
+        "App Name" => app_name,
+        "Platform" => "Android",
+        "Build Date" => Time.new.to_s,
+      },
+      slack_url: slack_url
+    )
+  end
+
+  def slack_error(message, app_name, slack_channel, slack_url)
+    slack(
+      message: "An error appear during build proccess",
+      channel: "##{slack_channel}",
+      success: false,
+      payload: {
+        "Error Message" => message,
+        "Platform" => "Android",
+        "App Name" => app_name,
+        "Build Date" => Time.new.to_s,
+      },
+      slack_url: slack_url
+    )
+  end
+end

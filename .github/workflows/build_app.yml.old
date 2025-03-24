@@ -1,0 +1,177 @@
+# Here is list environment using in this workflow
+
+#   parameters
+#     - DEPLOYMENT_TARGET
+#     - FASTLANE_ACTION
+
+#   secrets
+#     - CONFIG_ENCRYPTED_KEY
+#     - XCODE_CERTIFICATE_PASSWORD
+#     - KEYCHAIN_PASSWORD
+#     - SLACK_CHANNEL
+#     - SLACK_URL
+
+#     - FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD
+#     - FASTLANE_PASSWORD
+#     - FASTLANE_SESSION
+
+#     - FIREBASE_CLI_TOKEN
+#     - GIT_AUTHOR_EMAIL
+#     - GIT_AUTHOR_NAME
+
+
+name: release-app-workflow
+
+env:
+  DEFAULT_DEPLOYMENT_TARGET: Development
+  DEFAULT_FASTLANE_ACTION: deploy
+
+on:
+  push:
+    branches:
+      - release/[12].[0-9]+.[0-9]+
+  
+  workflow_dispatch:
+    inputs:
+      fastlaneAction:
+        type: choice
+        description: "Fastlane action task"
+        options: 
+          - build
+          - codepush
+          - deploy
+        default: 'deploy'
+        required: true
+      deploymentTarget:
+        type: choice
+        description: "Deployment Target"
+        options: 
+          - Development
+          - Staging
+          - Production
+        default: 'Development'
+        required: true
+
+jobs:
+  android-build:
+    name: Android Build Release
+    runs-on: ubuntu-20.04 # using ubuntu latest version / or you can use a specific version
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/git_config
+        with:
+          gitAuthorEmail: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          gitAuthorName: ${{ secrets.GIT_AUTHOR_NAME }}
+
+      - uses: ./.github/actions/setup_deployment_target
+        with:
+          deploymentTarget: ${{ github.event.inputs.deploymentTarget || env.DEFAULT_DEPLOYMENT_TARGET }}
+          configEncryptedKey: ${{ secrets.CONFIG_ENCRYPTED_KEY }}
+
+      - uses: ./.github/actions/setup_node
+
+      # this step is necessary to distribute app via Firebase
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      # this step is necessary to install bundle
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2 # Not needed with a .ruby-version file
+
+      - name: Caching ruby dependencies
+        uses: actions/cache@v2
+        with:
+          path: 'vendor/bundle'
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/android/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+          
+      - name: Install bundle dependencies
+        run: |
+          cd android
+          bundle install
+      
+      - name: Run Fastlane
+        env:
+          PLATFORM: Android
+          FASTLANE_ACTION: ${{ github.event.inputs.fastlaneAction || env.DEFAULT_FASTLANE_ACTION}}
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_URL: ${{ secrets.SLACK_URL }}
+        run: |
+          bash ./.build-scripts/build_app.sh
+
+  ios-build:
+    name: IOS Build Release
+    runs-on: macos-11 # using ubuntu latest version / or you can use a specific version
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/git_config
+        with:
+          gitAuthorEmail: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          gitAuthorName: ${{ secrets.GIT_AUTHOR_NAME }}
+
+      - uses: ./.github/actions/setup_deployment_target
+        with:
+          deploymentTarget: ${{ github.event.inputs.deploymentTarget || env.DEFAULT_DEPLOYMENT_TARGET }}
+          configEncryptedKey: ${{ secrets.CONFIG_ENCRYPTED_KEY }}
+
+      - uses: ./.github/actions/setup_node
+
+      # this step is necessary to distribute app via Firebase
+      - name: Download and install AppleWWDRCAG3
+        run: curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer -o ios/fastlane/AppleWWDRCAG3.cer
+
+      # this step is necessary to install bundle
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.2 # Not needed with a .ruby-version file
+
+      - name: Restore Pods cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Caching ruby dependencies
+        uses: actions/cache@v2
+        with:
+          path: 'vendor/bundle'
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/ios/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install Pod
+        run: |
+          cd ios
+          pod install
+          
+      - name: Install bundle dependencies
+        run: |
+          cd ios
+          bundle install
+      
+      - name: Run Fastlane
+        env:
+          PLATFORM: iOS
+          FASTLANE_ACTION: ${{ github.event.inputs.fastlaneAction || env.DEFAULT_FASTLANE_ACTION}}
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          SLACK_URL: ${{ secrets.SLACK_URL }}
+          XCODE_CERTIFICATE_PASSWORD: ${{ secrets.XCODE_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+        run: |
+          bash ./.build-scripts/build_app.sh

@@ -1,0 +1,8 @@
+import { createSelector } from 'reselect';
+import { initialState } from './reducer';
+
+export const makeSelect{{ properCase name }}Domain = identifier =>
+  state => state[identifier] || initialState;
+
+export const select{{ properCase name }} = identifier =>
+  createSelector(makeSelect{{ properCase name }}Domain(identifier), state => state.count);

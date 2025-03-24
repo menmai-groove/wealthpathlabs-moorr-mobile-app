@@ -1,0 +1,143 @@
+{
+  "layout": [
+    {
+      "id": "question",
+      "label": "forms.onboarding-investment.content",
+      "component": "question",
+      "emotion": "smile",
+      "fields": []
+    },
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": true,
+          "label": "forms.onboarding-investment.name",
+          "placeholder": "forms.onboarding-investment.namePlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.onboarding-investment.nameRequired"
+            }
+          ]
+        },
+        {
+          "id": "ownership",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "required": true,
+          "label": "forms.onboarding-investment.ownership",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.borrowing.ownershipRequired"
+            }
+          ]
+        },
+        {
+          "id": "ownershipSplitPerson1",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.borrowing.ownershipSplit",
+          "placeholder": "forms.borrowing.ownershipSplitPlaceholder",
+          "dataType": "number",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100,
+          "iconRight": "percent",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.asset.ownershipSplitPerson1Required"
+            }
+          ]
+        },
+        {
+          "id": "ownershipSplitPerson2",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.borrowing.ownershipSplit",
+          "placeholder": "forms.borrowing.ownershipSplitPlaceholder",
+          "dataType": "number",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100,
+          "iconRight": "percent",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.asset.ownershipSplitPerson1Required"
+            }
+          ]
+        },
+        {
+          "id": "otherBorrowerPercentage",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.borrowing.otherBorrowerPercentage",
+          "placeholder": "forms.borrowing.otherBorrowerPercentagePlaceholder",
+          "dataType": "number",
+          "required": true,
+          "minValue": 0,
+          "maxValue": 100,
+          "iconRight": "percent",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.asset.ownershipSplitPerson1Required"
+            }
+          ]
+        },
+        {
+          "id": "investment",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "forms.onboarding-investment.investment",
+          "placeholder": "forms.onboarding-investment.investmentPlaceholder",
+          "dataType": "number",
+          "formatData": "currency",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.onboarding-investment.investmentRequired"
+            }
+          ]
+        },
+        {
+          "id": "investmentIncome",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "forms.onboarding-investment.investmentIncome",
+          "placeholder": "forms.onboarding-investment.investmentIncomePlaceholder",
+          "dataType": "number",
+          "formatData": "currency",
+          "minValue": 0,
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.onboarding-investment.investmentIncomeRequired"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

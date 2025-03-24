@@ -1,0 +1,45 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "date",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "required": true,
+          "visible": true,
+          "label": "screens.historicalLog.date",
+          "placeholder": "screens.historicalLog.date",
+          "dataType": "date",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.requiredDate"
+            }
+          ]
+        },
+        {
+          "id": "value",
+
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "screens.historicalLog.value",
+          "placeholder": "screens.historicalLog.value",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.historicalLog.requiredValue"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

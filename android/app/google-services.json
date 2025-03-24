@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "780966051630",
+    "project_id": "moorrdev",
+    "storage_bucket": "moorrdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780966051630:android:d6fe5426776ecbdfe504bf",
+        "android_client_info": {
+          "package_name": "com.moorr.android.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780966051630-0a5f7sn7ra0p4nhabgcke63kod04h79e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeOwvkmrTV8sjtpV1kOHQa9UWC_08-Wu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780966051630-0a5f7sn7ra0p4nhabgcke63kod04h79e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "780966051630-4luh2e7vdpi164ao1dt2emqj3no9ftaa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moorr.ios.dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780966051630:android:9593a130e3e978bfe504bf",
+        "android_client_info": {
+          "package_name": "com.moorr.tempdev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780966051630-0a5f7sn7ra0p4nhabgcke63kod04h79e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeOwvkmrTV8sjtpV1kOHQa9UWC_08-Wu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780966051630-0a5f7sn7ra0p4nhabgcke63kod04h79e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "780966051630-4luh2e7vdpi164ao1dt2emqj3no9ftaa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moorr.ios.dev"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

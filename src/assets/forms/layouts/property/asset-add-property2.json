@@ -1,0 +1,52 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "income",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.grossRentIncome",
+          "dataType": "number",
+          "formatData": "currency"
+        },
+        {
+          "id": "incomeFrequency",
+          "component": "dropdown",
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "visible": true,
+          "label": "forms.income.frequency"
+        },
+        {
+          "id": "adhocIncome",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.adHocPropertyIncome",
+          "dataType": "number",
+          "formatData": "currency"
+        },
+        {
+          "id": "adIncomeFrequency",
+          "component": "dropdown",
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "visible": true,
+          "label": "forms.income.frequency"
+        }
+      ]
+    }
+  ],
+  "conditional": {
+    "logics": []
+  }
+}

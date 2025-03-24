@@ -1,0 +1,18 @@
+{
+  "logics": [
+    {
+      "type": "setValue",
+      "field": "annualAmount",
+      "format": "number",
+      "condition": {
+        "operator": "SUMBY",
+        "condition": [
+          {
+            "field": "holdingCosts",
+            "key": "essentialAmount"
+          }
+        ]
+      }
+    }
+  ]
+}

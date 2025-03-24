@@ -1,0 +1,217 @@
+{
+  "layout": [
+    {
+      "id": "income",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "type",
+          "component": "label",
+          "value": "",
+          "visible": true,
+          "required": true,
+          "label": "forms.income.incomeType"
+        },
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": false,
+          "label": "forms.income.name",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.income.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "totalAnnual",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "readonly": true,
+          "label": "forms.income.annualIncome",
+          "placeholder": "",
+          "formatData": "currency"
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "label": "forms.income.detailLabel",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "address",
+          "component": "label",
+          "value": "",
+          "visible": true,
+          "label": "forms.income.address"
+        },
+        {
+          "id": "assetLink",
+          "component": "custom-component",
+          "screen": "",
+          "params": "",
+          "visible": true,
+          "label": "",
+          "value": "",
+          "dataType": "string"
+        },
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "readonly": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "label",
+              "value": "",
+              "visible": true,
+              "label": "forms.income.ownership"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "incomeBreakdown",
+      "label": "forms.income.incomeBreakdown",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "amountAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "regularIncome",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.income.regularIncome",
+              "placeholder": "",
+              "dataType": "number",
+              "formatData": "currency"
+            },
+            {
+              "id": "frequency",
+              "component": "dropdown",
+              "visible": true,
+              "value": {
+                "value": "Yearly"
+              },
+              "options": [],
+              "label": "forms.income.frequency",
+              "__placeholder": "forms.income.frequencyPlaceholder"
+            }
+          ]
+        },
+        {
+          "id": "adhocIncome",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.income.adhocIncome",
+          "placeholder": "",
+          "dataType": "number",
+          "formatData": "currency"
+        },
+        {
+          "id": "adhocFrequency",
+          "component": "dropdown",
+          "visible": true,
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "label": "forms.income.frequency",
+          "__placeholder": "forms.income.frequencyPlaceholder"
+        }
+      ]
+    },
+    {
+      "id": "moneySmart",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "paymentFrequency",
+          "component": "dropdown",
+          "visible": false,
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "label": "forms.income.paymentFrequency",
+          "__placeholder": "forms.income.paymentFrequencyPlaceholder"
+        },
+        {
+          "id": "nextPayDate",
+          "component": "datepicker",
+          "formatData": "DD/MM/YYYY",
+          "visible": false,
+          "value": "",
+          "options": [],
+          "required": false,
+          "label": "forms.income.nextPayDate"
+        },
+        {
+          "id": "moneySmarts",
+          "component": "label",
+          "value": "",
+          "visible": true,
+          "label": "forms.income.moneySmartJar"
+        },
+        {
+          "id": "notes",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.income.notes",
+          "placeholder": "",
+          "dataType": "string",
+          "multiline": true
+        }
+      ]
+    }
+  ],
+  "conditionLogics": {
+    "logics": [
+      {
+        "type": "setValue",
+        "field": "totalAnnual",
+        "format": "annualIncome",
+        "condition": {
+          "condition": [
+            {
+              "id": "regularIncome",
+              "field": "regularIncome"
+            },
+            {
+              "id": "regularIncomeFrequence",
+              "field": "frequency"
+            },
+            {
+              "id": "adhocIncome",
+              "field": "adhocIncome"
+            },
+            {
+              "id": "adhocIncomeFrequence",
+              "field": "adhocFrequency"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

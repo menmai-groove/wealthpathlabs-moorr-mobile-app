@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Moorr</string>
+    <string name="launchscreen_background">splash_screen_background</string>
+    <string name="launchscreen_logo">bootsplash_logo</string>
+    <string name="launchscreen_text">splash_screen_bottom_text</string>
+    <string name="CodePushDeploymentKey"></string>
+    <string name="CodePushPublicKey">CODEPUSH_PUBLIC_KEY</string>
+    <string name="facebook_app_id">FACEBOOK_APP_ID</string>
+    <string name="fb_login_protocol_scheme">fbFACEBOOK_APP_ID</string>
+    <string name="facebook_client_token">FACEBOOK_CLIENT_TOKEN</string>
+</resources>

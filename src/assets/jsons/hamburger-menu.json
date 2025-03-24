@@ -1,0 +1,161 @@
+{
+  "data": [
+    {
+      "id": "profile_setting",
+      "hidden": true
+    },
+    {
+      "id": "home",
+      "label": "Home",
+      "icon": "Home",
+      "iconHasBG": true
+    },
+    {
+      "id": "money_smarts",
+      "label": "MoneySMARTS",
+      "icon": "Money",
+      "iconHasBG": true,
+      "children": [
+        {
+          "id": "money_smarts_dashboard",
+          "label": "MoneySMARTS Dashboard"
+        },
+        {
+          "id": "jars",
+          "label": "Jars",
+          "children": [
+            {
+              "id": "jars_dashboard",
+              "label": "Jars Dashboard",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "primary_saving_account_jar",
+              "label": "Primary Account - Savings",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "living_life_style_jar",
+              "label": "Living & Lifestyle Jar",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "credit_card-jar",
+              "label": "Credit Card Jar",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "direct_payment_jar",
+              "label": "Direct Payment Jar",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "loans_borrowings_jar",
+              "label": "Loans/Borrowings Jar",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "provisions_jar",
+              "label": "Provisions Jar",
+              "icon": "ArrowRight2"
+            }
+          ]
+        },
+        {
+          "id": "monthly_check_up",
+          "label": "Monthly Check-Up"
+        },
+        {
+          "id": "monthly_reporting",
+          "label": "Monthly Reporting",
+          "children": [
+            {
+              "id": "monthly_reporting_dashboard",
+              "label": "Monthly Reporting Dashboard",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "provision_spending",
+              "label": "Provision Spending",
+              "icon": "ArrowRight2"
+            },
+            {
+              "id": "regular_spending",
+              "label": "Regular Spending",
+              "icon": "ArrowRight2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "financial",
+      "label": "Finance Dashboards",
+      "icon": "Financial",
+      "iconHasBG": true,
+      "children": [
+        {
+          "id": "financial_dashboard",
+          "label": "Financial Dashboard"
+        },
+        {
+          "id": "expense_dashboard",
+          "label": "Expense Dashboard"
+        }
+      ]
+    },
+    {
+      "id": "my_financials_dashboard",
+      "label": "MyFINANCIALS",
+      "icon": "Financial",
+      "iconHasBG": true,
+      "params": {
+        "scrollToMyFINANCIALS": true
+      }
+    },
+    {
+      "id": "wealth_dashboard",
+      "label": "Wealth Dashboard",
+      "icon": "Wealth",
+      "iconHasBG": true
+    },
+    {
+      "id": "vertical_timeline",
+      "label": "MyGOALS",
+      "icon": "Aim",
+      "iconHasBG": true
+    },
+    {
+      "id": "myknowledge",
+      "label": "MyKNOWLEDGE",
+      "icon": "MyKnowledge",
+      "iconHasBG": true
+    },
+    {
+      "id": "report_a_bug",
+      "label": "Report a bug",
+      "icon": "Bug",
+      "iconHasBG": true
+    },
+    {
+      "id": "cash_position",
+      "label": "cash_position",
+      "hidden": true
+    },
+    {
+      "id": "net_worth",
+      "label": "net_worth",
+      "hidden": true
+    },
+    {
+      "id": "asset_position",
+      "label": "asset_position",
+      "hidden": true
+    },
+    {
+      "id": "debt_position",
+      "label": "debt_position",
+      "hidden": true
+    }
+  ]
+}

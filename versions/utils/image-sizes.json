@@ -1,0 +1,14 @@
+{
+  "ios": [
+    { "postfix": "@3x", "folder": "ios/images", "scale": 3, "base": 3 },
+    { "postfix": "@2x", "folder": "ios/images", "scale": 2, "base": 3 },
+    { "postfix": "", "folder": "ios/images", "scale": 1, "base": 3 }
+  ],
+  "android": [
+    { "postfix": "", "folder": "android/mipmap-mdpi", "scale": 1, "base": 4 },
+    { "postfix": "", "folder": "android/mipmap-hdpi", "scale": 1.5, "base": 4 },
+    { "postfix": "", "folder": "android/mipmap-xhdpi", "scale": 2, "base": 4 },
+    { "postfix": "", "folder": "android/mipmap-xxhdpi", "scale": 3, "base": 4 },
+    { "postfix": "", "folder": "android/mipmap-xxxhdpi", "scale": 4, "base": 4 }
+  ]
+}

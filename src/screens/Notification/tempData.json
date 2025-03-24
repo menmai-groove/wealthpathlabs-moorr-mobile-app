@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Remember to enter your Monthly Check Up.",
+    "date": "2022-02-15T03:55:36Z",
+    "isRead": false,
+    "module": "MoneySMARTS",
+    "event": "reminer"
+  },
+  {
+    "title": "You have a Goal due this month on the 22 April 2021",
+    "date": "2022-01-15T03:55:36Z",
+    "isRead": false,
+    "module": "PersonalGoals",
+    "event": "reminer"
+  },
+  {
+    "title": "15% being made on Targeted Annual Surplus",
+    "date": "2021-12-15T03:55:36Z",
+    "isRead": true,
+    "module": "MoneySMARTS",
+    "event": "middle"
+  },
+  {
+    "title": "Remember to enter your Monthly Check Up.",
+    "date": "2021-02-15T03:55:36Z",
+    "isRead": true,
+    "module": "MoneySMARTS",
+    "event": "reminer"
+  },
+  {
+    "title": "You have a Goal due this month on the 22 April 2021",
+    "date": "2020-02-15T03:55:36Z",
+    "isRead": true,
+    "module": "PersonalGoals",
+    "event": "reminer"
+  },
+  {
+    "title": "15% being made on Targeted Annual Surplus",
+    "date": "2019-02-15T03:55:36Z",
+    "isRead": true,
+    "module": "MoneySMARTS",
+    "event": "middle"
+  }
+]

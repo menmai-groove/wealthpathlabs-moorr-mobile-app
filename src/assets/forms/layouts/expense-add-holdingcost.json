@@ -1,0 +1,60 @@
+{
+  "layout": [
+    {
+      "id": "add-holding-cost",
+      "component": "group",
+      "collapse": false,
+      "visible": true,
+      "fields": [
+        {
+          "id": "holdingCostName",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "forms.expense.holdingNameLabel",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.expense.holdingNameRequired"
+            }
+          ]
+        },
+        {
+          "id": "essentialAmount",
+          "component": "input",
+          "visible": true,
+          "required": true,
+          "value": "",
+          "label": "forms.expense.costPALabel",
+          "placeholder": "",
+          "dataType": "number",
+          "formatData": "currency",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.expense.costPARequied"
+            }
+          ]
+        },
+        {
+          "id": "jar",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "required": true,
+          "label": "forms.expense.moneySmartsJars",
+          "dataType": "string",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.expense.moneySmartsJarsRequired"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

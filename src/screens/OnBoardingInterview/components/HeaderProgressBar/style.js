@@ -1,0 +1,82 @@
+export default {
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'palette.color-dynamic-container',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flexDirection: 'row',
+    paddingHorizontal: 26,
+    paddingVertical: 20,
+  },
+  safeView: {
+    backgroundColor: 'palette.color-primary-1',
+  },
+  backIcon: {
+    color: 'palette.color-black-1',
+  },
+  boxProgress: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    backgroundColor: 'palette.color-primary-2',
+    borderRadius: 20,
+    marginLeft: 6,
+  },
+  textProgress: {
+    color: 'palette.color-black-1',
+    fontSize: 12,
+  },
+  textLabel: {
+    fontSize: 12,
+  },
+  iconCheckDefault: {
+    width: 16,
+    aspectRatio: 1,
+    borderRadius: 10,
+    backgroundColor: '#F5F5FA',
+    borderWidth: 1,
+    borderColor: '#DFDFEB',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dot: {
+    width: 4,
+    aspectRatio: 1,
+    borderRadius: 2,
+    backgroundColor: '#DFDFEB',
+  },
+  dotActive: {
+    width: 6,
+    aspectRatio: 1,
+    borderRadius: 3,
+    backgroundColor: '#38C976',
+  },
+  iconCheck: {
+    width: 16,
+    aspectRatio: 1,
+    borderRadius: 10,
+    backgroundColor: '#38C976',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconCheckCurrent: {
+    width: 20,
+    aspectRatio: 1,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#38C976',
+    backgroundColor: '#F5F5FA',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  width: { width: 50 },
+  progress: {
+    flex: 1,
+    justifyContent: 'center',
+    minHeight: 20,
+  },
+  line: {
+    flex: 1,
+    backgroundColor: '#38C976',
+    height: 1,
+  },
+};

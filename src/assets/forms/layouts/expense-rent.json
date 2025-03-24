@@ -1,0 +1,211 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "categoryAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "type",
+              "component": "dropdown",
+              "value": "",
+              "visible": true,
+              "required": true,
+              "readonly": false,
+              "options": [],
+              "label": "forms.expense.typeItem",
+              "dataType": "string",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.expense.typeItemRequired"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.expense.cardName",
+          "dataType": "string",
+          "placeholder": "forms.expense.nameCardPlaceholder",
+          "required": true,
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.expense.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "amountAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "essentialAmount",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "required": false,
+              "dataType": "number",
+              "label": "forms.expense.essential",
+              "formatData": "currency",
+              "keyboardType": "numeric",
+              "maxValue": 100000000,
+              "placeholder": "",
+              "validation": []
+            },
+            {
+              "id": "discretionaryAmount",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "required": false,
+              "label": "forms.expense.discretionary",
+              "dataType": "number",
+              "keyboardType": "numeric",
+              "formatData": "currency",
+              "maxValue": 100000000,
+              "placeholder": "",
+              "validation": []
+            },
+            {
+              "id": "totalAmount",
+              "component": "input",
+              "value": "0",
+              "visible": true,
+              "readonly": true,
+              "label": "forms.expense.totalAmount",
+              "dataType": "string",
+              "keyboardType": "numeric",
+              "formatData": "currency",
+              "placeholder": "",
+              "validation": []
+            },
+            {
+              "id": "frequency",
+              "component": "dropdown",
+              "value": {
+                "value": "Monthly"
+              },
+              "visible": true,
+              "options": [],
+              "label": "forms.expense.frequency",
+              "__placeholder": "forms.expense.frequencyPlaceholder",
+              "dataType": "string"
+            }
+          ]
+        },
+        {
+          "id": "isTaxDeductableAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "isTaxDeductable",
+              "component": "radio",
+              "value": true,
+              "defaultValue": true,
+              "visible": true,
+              "label": "forms.expense.taxDeductible",
+              "dataType": "boolean"
+            }
+          ]
+        },
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": "",
+              "options": [],
+              "visible": true,
+              "required": true,
+              "label": "forms.expense.ownership",
+              "__placeholder": "forms.expense.ownershipPlaceholder",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.expense.ownershipRequired"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "billPaymentReminder",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "placeholder": "DD MMMM YYYY",
+          "value": null,
+          "visible": true,
+          "required": false,
+          "label": "forms.expense.billPaymentReminder",
+          "dataType": "date"
+        },
+        {
+          "id": "nextDueDate",
+          "component": "datepicker",
+          "formatData": "DD/MM/YYYY",
+          "value": null,
+          "visible": false,
+          "required": false,
+          "label": "forms.expense.nextDueDate",
+          "dataType": "date"
+        },
+        {
+          "id": "jarAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "jar",
+              "component": "dropdown",
+              "value": null,
+              "visible": true,
+              "required": true,
+              "label": "forms.expense.moneySmartsJars",
+              "dataType": "string"
+            }
+          ]
+        },
+        {
+          "id": "note",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.expense.notes",
+          "numberOfLines": 2,
+          "dataType": "string",
+          "formatData": "",
+          "multiline": true,
+          "returnKeyType": "default",
+          "validation": [
+            {
+              "type": "maxChar",
+              "message": "forms.expense.noteMaxChar",
+              "number": 200
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

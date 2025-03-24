@@ -1,0 +1,68 @@
+{
+  "layout": [
+    {
+      "id": "question",
+      "label": "forms.bank.content",
+      "component": "question",
+      "emotion": "smile",
+      "fields": []
+    },
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "required": true,
+          "label": "forms.bank.name",
+          "placeholder": "forms.bank.namePlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.bank.nameRequired"
+            }
+          ]
+        },
+        {
+          "id": "ownership",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "required": true,
+          "label": "forms.bank.ownership",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.borrowing.ownershipRequired"
+            }
+          ]
+        },
+        {
+          "id": "balance",
+          "component": "input",
+          "value": "",
+          "required": true,
+          "visible": true,
+          "label": "forms.bank.balance",
+          "placeholder": "forms.bank.balancePlaceholder",
+          "dataType": "number",
+          "formatData": "currency",
+          "validation": [
+            {
+              "type": "required",
+              "message": "forms.bank.balanceRequired"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditional": {}
+}

@@ -1,0 +1,793 @@
+{
+  "layout": [
+    {
+      "id": "form",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "name",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.cardName",
+          "placeholder": "screens.asset.nameCardPlaceholder",
+          "dataType": "string",
+          "formatData": "",
+          "required": true,
+          "validation": [
+            {
+              "type": "required",
+              "message": "screens.asset.requiredCardName"
+            }
+          ]
+        },
+        {
+          "id": "currentValueAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "currentValue",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.currentPropertyValue",
+              "dataType": "number",
+              "formatData": "currency",
+              "minValue": 0,
+              "maxValue": 100000000
+            }
+          ]
+        },
+        {
+          "id": "purposeAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "purpose",
+              "component": "dropdown",
+              "value": null,
+              "options": [],
+              "required": true,
+              "visible": true,
+              "label": "forms.asset.primaryPurposeFull",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.primaryPurposeRequired"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "annualIncome",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.income.annualIncome",
+          "dataType": "number",
+          "formatData": "currency",
+          "readonly": true
+        },
+        {
+          "id": "ownershipAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "ownership",
+              "component": "dropdown",
+              "value": "",
+              "options": [],
+              "visible": true,
+              "required": true,
+              "label": "forms.asset.owner",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.borrowing.ownershipRequired"
+                }
+              ]
+            },
+            {
+              "id": "ownershipSplitPerson1",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.asset.ownershipSplit",
+              "labelDynamic": {
+                "person": "Person1"
+              },
+              "dataType": "number",
+              "iconRight": "percent",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            },
+            {
+              "id": "ownershipSplitPerson2",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.asset.ownershipSplit",
+              "labelDynamic": {
+                "person": "Person2"
+              },
+              "dataType": "number",
+              "iconRight": "percent",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            },
+            {
+              "id": "otherBorrowerPercentage",
+              "component": "input",
+              "value": "",
+              "visible": false,
+              "label": "forms.borrowing.otherBorrowerPercentage",
+              "placeholder": "forms.borrowing.otherBorrowerPercentagePlaceholder",
+              "dataType": "number",
+              "required": true,
+              "minValue": 0,
+              "maxValue": 100,
+              "iconRight": "percent",
+              "validation": [
+                {
+                  "type": "required",
+                  "message": "forms.asset.ownershipSplitPerson1Required"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "address",
+          "component": "address-autocomplete",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.address",
+          "placeholder": "forms.asset.locationPlaceholder",
+          "leftAddressIcon": true,
+          "trim": true
+        }
+      ]
+    },
+    {
+      "id": "purchaseDetail",
+      "label": "forms.asset.purchaseDetails",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "purchasePrice",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.purchasePrice",
+          "dataType": "number",
+          "formatData": "currency",
+          "minValue": 0,
+          "maxValue": 100000000
+        },
+        {
+          "id": "datePurchased",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "visible": true,
+          "label": "forms.asset.purchaseDate",
+          "dataType": "date"
+        },
+        {
+          "id": "settlementDate",
+          "component": "datepicker",
+          "formatData": "DD MMMM YYYY",
+          "value": null,
+          "visible": true,
+          "label": "forms.asset.settlementDateIfApplicable",
+          "dataType": "date"
+        }
+      ]
+    },
+    {
+      "id": "incomeBreakdown",
+      "label": "forms.asset.incomeBreakdown",
+      "component": "collapse",
+      "collapse": true,
+      "isHide": true,
+      "fields": [
+        {
+          "id": "incomeBreakdownCard",
+          "component": "custom-component",
+          "value": "",
+          "required": false,
+          "visible": false
+        },
+        {
+          "id": "income",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.asset.grossRent",
+          "dataType": "number",
+          "formatData": "currency"
+        },
+        {
+          "id": "incomeFrequency",
+          "component": "dropdown",
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "visible": false,
+          "label": "forms.income.frequency"
+        },
+        {
+          "id": "adhocIncome",
+          "component": "input",
+          "value": "",
+          "visible": false,
+          "label": "forms.asset.adHocPropertyRelatedIncome",
+          "dataType": "number",
+          "formatData": "currency"
+        },
+        {
+          "id": "adIncomeFrequency",
+          "component": "dropdown",
+          "value": {
+            "value": "Yearly"
+          },
+          "options": [],
+          "visible": false,
+          "label": "forms.income.frequency"
+        }
+      ]
+    },
+    {
+      "id": "ongoingPropertyCost",
+      "label": "forms.asset.ongoingPropertyCosts",
+      "component": "collapse",
+      "collapse": false,
+      "visible": true,
+      "fields": []
+    },
+    {
+      "id": "depreciation",
+      "label": "forms.asset.depreciation",
+      "component": "collapse",
+      "collapse": false,
+      "visible": false,
+      "fields": [
+        {
+          "id": "depreciationAmount",
+          "component": "custom-component",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.depreciationAmount",
+          "dataType": "number",
+          "formatData": "currency",
+          "disabled": true,
+          "tooltip": "forms.asset.depreciationTooltip"
+        },
+        {
+          "id": "depreciationMethod",
+          "component": "dropdown",
+          "value": null,
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.depreciationMethod",
+          "validation": []
+        }
+      ]
+    },
+    {
+      "id": "performanceDetail",
+      "label": "forms.asset.performanceDetails",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "capitalGrowth",
+          "component": "input",
+          "value": "0",
+          "visible": true,
+          "label": "forms.asset.historicalCapitalGrowth",
+          "dataType": "string",
+          "iconRight": "percent",
+          "readonly": true
+        },
+        {
+          "id": "projectedCapitalGrowthAsAt",
+          "component": "asAt",
+          "value": "",
+          "visible": true,
+          "fields": [
+            {
+              "id": "projectedCapitalGrowth",
+              "component": "input",
+              "value": "",
+              "visible": true,
+              "label": "forms.asset.projected",
+              "dataType": "number",
+              "iconRight": "percent",
+              "minValue": 0,
+              "maxValue": 10000000
+            }
+          ]
+        },
+        {
+          "id": "currentRentalYield",
+          "component": "input",
+          "value": "0",
+          "visible": false,
+          "label": "forms.asset.currentYield",
+          "dataType": "string",
+          "iconRight": "percent",
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "id": "propertyAttribute",
+      "label": "forms.asset.propertyAttributes",
+      "component": "collapse",
+      "collapse": true,
+      "fields": [
+        {
+          "id": "propertyType",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.propertyType"
+        },
+        {
+          "id": "titleType",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.titleType"
+        },
+        {
+          "id": "material",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.constructionMaterial"
+        },
+        {
+          "id": "condition",
+          "component": "dropdown",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.condition"
+        },
+        {
+          "id": "landLotSize",
+          "component": "landLotSize",
+          "value": "",
+          "options": [],
+          "visible": true,
+          "label": "forms.asset.lanLotSize",
+          "minValue": 0,
+          "maxValue": 1000000,
+          "dataType": "landSize"
+        },
+        {
+          "id": "internalLivingSpaceSize",
+          "component": "input",
+          "visible": true,
+          "value": "",
+          "label": "forms.asset.internalLivingSpace2",
+          "dataType": "number",
+          "iconRight": "sqm",
+          "minValue": 0,
+          "maxValue": 1000000
+        },
+        {
+          "id": "bedrooms",
+          "component": "increaseNumber",
+          "visible": true,
+          "value": 0,
+          "label": "forms.asset.bedrooms",
+          "maximum": 100
+        },
+        {
+          "id": "bathrooms",
+          "component": "increaseNumber",
+          "visible": true,
+          "value": 0,
+          "label": "forms.asset.bathrooms",
+          "maximum": 100
+        },
+        {
+          "id": "livingSpaces",
+          "component": "increaseNumber",
+          "visible": true,
+          "value": 0,
+          "label": "forms.asset.livingRooms",
+          "maximum": 100
+        },
+        {
+          "id": "carSpaces",
+          "component": "increaseNumber",
+          "visible": true,
+          "value": 0,
+          "label": "forms.asset.carSpaces",
+          "maximum": 100
+        },
+        {
+          "id": "isBrandNew",
+          "component": "switch",
+          "value": true,
+          "visible": true,
+          "label": "forms.asset.purchaseBrandNewNewlyBuiltOrOffThePlan",
+          "dataType": "boolean"
+        }
+      ]
+    },
+    {
+      "id": "additionalDetail",
+      "label": "forms.asset.additionalDetails",
+      "component": "collapse",
+      "collapse": true,
+      "isHide": true,
+      "fields": [
+        {
+          "id": "managingAgent",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.managingAgentFirm",
+          "dataType": "string",
+          "iconRight": "building"
+        },
+        {
+          "id": "managingAgentContactName",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.contactName",
+          "dataType": "string",
+          "iconRight": "employer"
+        },
+        {
+          "id": "managingAgentContactNo",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.contactNumber",
+          "dataType": "string",
+          "iconRight": "phone"
+        }
+      ]
+    },
+    {
+      "id": "formNote",
+      "label": "",
+      "component": "group",
+      "fields": [
+        {
+          "id": "addlInfo",
+          "component": "input",
+          "value": "",
+          "visible": true,
+          "label": "forms.asset.notes",
+          "dataType": "string",
+          "formatData": "",
+          "multiline": true,
+          "returnKeyType": "default"
+        }
+      ]
+    }
+  ],
+  "conditional": {
+    "logics": [
+      {
+        "type": "visible",
+        "field": "ownershipSplitPerson1",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Joint",
+              "key": "label"
+            },
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "ownershipSplitPerson2",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Joint",
+              "key": "label"
+            },
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "otherBorrowerPercentage",
+        "value": true,
+        "condition": {
+          "operator": "AND",
+          "condition": [
+            {
+              "type": "=",
+              "field": "ownership",
+              "value": "Other",
+              "key": "label"
+            }
+          ]
+        }
+      },
+      {
+        "type": "totalPercent",
+        "fields": [
+          "ownershipSplitPerson1",
+          "ownershipSplitPerson2",
+          "otherBorrowerPercentage"
+        ],
+        "value": 100,
+        "condition": {
+          "operator": "AND",
+          "condition": []
+        }
+      },
+      {
+        "type": "visible",
+        "field": "annualIncome",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Investment",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Business Use",
+              "key": "value"
+            }
+          ]
+        }
+      },
+      {
+        "type": "group-visible",
+        "field": "incomeBreakdown",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Investment",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Business Use",
+              "key": "value"
+            }
+          ]
+        }
+      },
+      {
+        "type": "group-visible",
+        "field": "depreciation",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Investment",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Business Use",
+              "key": "value"
+            }
+          ]
+        }
+      },
+      {
+        "type": "group-visible",
+        "field": "ongoingPropertyCost",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Investment",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Business Use",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Personal Use",
+              "key": "value"
+            }
+          ]
+        }
+      },
+      {
+        "type": "visible",
+        "field": "currentRentalYield",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Investment",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Business Use",
+              "key": "value"
+            }
+          ]
+        }
+      },
+      {
+        "type": "group-visible",
+        "field": "additionalDetail",
+        "value": true,
+        "condition": {
+          "operator": "OR",
+          "condition": [
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Investment",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Business Use",
+              "key": "value"
+            },
+            {
+              "type": "=",
+              "field": "purpose",
+              "value": "Personal Use",
+              "key": "value"
+            }
+          ]
+        }
+      },
+      {
+        "type": "setValue",
+        "field": "currentRentalYield",
+        "format": "currentYield",
+        "condition": {
+          "condition": [
+            {
+              "id": "income",
+              "field": "income"
+            },
+            {
+              "id": "adhocIncome",
+              "field": "adhocIncome"
+            },
+            {
+              "id": "currentValue",
+              "field": "currentValue"
+            }
+          ]
+        }
+      },
+      {
+        "type": "setValue",
+        "field": "capitalGrowth",
+        "format": "historicalCapital",
+        "condition": {
+          "condition": [
+            {
+              "id": "currentValue",
+              "field": "currentValue"
+            },
+            {
+              "id": "purchasePrice",
+              "field": "purchasePrice"
+            },
+            {
+              "id": "datePurchased",
+              "field": "datePurchased"
+            }
+          ]
+        }
+      },
+      {
+        "type": "setValue",
+        "field": "annualIncome",
+        "format": "annualIncome",
+        "condition": {
+          "condition": [
+            {
+              "id": "regularIncome",
+              "field": "income"
+            },
+            {
+              "id": "regularIncomeFrequence",
+              "field": "incomeFrequency"
+            },
+            {
+              "id": "adhocIncome",
+              "field": "adhocIncome"
+            },
+            {
+              "id": "adhocIncomeFrequence",
+              "field": "adIncomeFrequency"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

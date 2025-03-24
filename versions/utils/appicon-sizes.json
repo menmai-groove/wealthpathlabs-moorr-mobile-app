@@ -1,0 +1,241 @@
+{
+  "ios": [
+    {
+      "size": "20x20",
+      "expected-size": 40,
+      "filename": "20x20@2x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "2x"
+    },
+    {
+      "size": "20x20",
+      "expected-size": 60,
+      "filename": "20x20@3x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "3x"
+    },
+    {
+      "size": "29x29",
+      "expected-size": 58,
+      "filename": "29x29@2x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "2x"
+    },
+    {
+      "size": "29x29",
+      "expected-size": 29,
+      "filename": "29x29@1x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "1x"
+    },
+    {
+      "size": "29x29",
+      "expected-size": 87,
+      "filename": "29x29@3x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "3x"
+    },
+    {
+      "size": "40x40",
+      "expected-size": 80,
+      "filename": "40x40@2x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "2x"
+    },
+    {
+      "size": "40x40",
+      "expected-size": 120,
+      "filename": "40x40@3x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "3x"
+    },
+    
+    {
+      "size": "57x57",
+      "expected-size": 57,
+      "filename": "57x57@1x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "1x"
+    },
+    {
+      "size": "57x57",
+      "expected-size": 114,
+      "filename": "57x57@2x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "2x"
+    },
+    {
+      "size": "60x60",
+      "expected-size": 180,
+      "filename": "60x60@3x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "3x"
+    },
+    
+    {
+      "size": "60x60",
+      "expected-size": 120,
+      "filename": "60x60@2x.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "iphone",
+      "scale": "2x"
+    },
+    {
+      "size": "1024x1024",
+      "filename": "1024x1024@1x.png",
+      "expected-size": 1024,
+      "idiom": "ios-marketing",
+      "folder": "ios/AppIcon.appiconset",
+      "scale": "1x"
+    },
+    {
+      "size": "40x40",
+      "expected-size": 80,
+      "filename": "40x40@2x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "2x"
+    },
+    {
+      "size": "76x76",
+      "expected-size": 152,
+      "filename": "76x76@2x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "2x"
+    },
+    {
+      "size": "29x29",
+      "expected-size": 58,
+      "filename": "29x29@2x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "2x"
+    },
+    {
+      "size": "76x76",
+      "expected-size": 76,
+      "filename": "76x76@1x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "1x"
+    },
+    {
+      "size": "29x29",
+      "expected-size": 29,
+      "filename": "29x29@1x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "1x"
+    },
+    {
+      "size": "40x40",
+      "expected-size": 40,
+      "filename": "40x40@1x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "1x"
+    },
+    {
+      "size": "83.5x83.5",
+      "expected-size": 167,
+      "filename": "83.5x83.5@2x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "2x"
+    },
+    {
+      "size": "20x20",
+      "expected-size": 20,
+      "filename": "20x20@1x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "1x"
+    },
+    {
+      "size": "20x20",
+      "expected-size": 40,
+      "filename": "20x20@2x.ipad.png",
+      "folder": "ios/AppIcon.appiconset",
+      "idiom": "ipad",
+      "scale": "2x"
+    }
+  ],
+  "android": [
+    {
+      "size": "48x48",
+      "expected-size": 48,
+      "filename": "ic_launcher.png",
+      "folder": "android/mipmap-mdpi"
+    },
+    {
+      "size": "72x72",
+      "expected-size": 72,
+      "filename": "ic_launcher.png",
+      "folder": "android/mipmap-hdpi"
+    },
+    {
+      "size": "96x96",
+      "expected-size": 96,
+      "filename": "ic_launcher.png",
+      "folder": "android/mipmap-xhdpi"
+    },
+    {
+      "size": "144x144",
+      "expected-size": 144,
+      "filename": "ic_launcher.png",
+      "folder": "android/mipmap-xxhdpi"
+    },
+    {
+      "size": "192x192",
+      "expected-size": 192,
+      "filename": "ic_launcher.png",
+      "folder": "android/mipmap-xxxhdpi"
+    },
+    {
+      "size": "48x48",
+      "expected-size": 48,
+      "filename": "ic_launcher_round.png",
+      "folder": "android/mipmap-mdpi",
+      "round": true
+    },
+    {
+      "size": "72x72",
+      "expected-size": 72,
+      "filename": "ic_launcher_round.png",
+      "folder": "android/mipmap-hdpi",
+      "round": true
+    },
+    {
+      "size": "96x96",
+      "expected-size": 96,
+      "filename": "ic_launcher_round.png",
+      "folder": "android/mipmap-xhdpi",
+      "round": true
+    },
+    {
+      "size": "144x144",
+      "expected-size": 144,
+      "filename": "ic_launcher_round.png",
+      "folder": "android/mipmap-xxhdpi",
+      "round": true
+    },
+    {
+      "size": "192x192",
+      "expected-size": 192,
+      "filename": "ic_launcher_round.png",
+      "folder": "android/mipmap-xxxhdpi",
+      "round": true
+    }
+  ]
+}
