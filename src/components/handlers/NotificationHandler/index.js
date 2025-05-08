@@ -1,22 +1,21 @@
-import { AppConstants } from 'constant';
-import { AnalyticsLib, NotificationLib, PushNotificationLib } from 'libs';
+import { AppConstants, AppScreenID } from 'constant';
+import { AnalyticsLib, NavigationServiceLib, NotificationLib, PushNotificationLib } from 'libs';
 import { useDispatchResolve } from 'libs/hooks';
 import { get, has, isEmpty, isNil, isNull } from 'lodash';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { AppState, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNotificationWithType } from 'screens/Notification';
 import { addTask, onRefreshDeviceAccessToken, onVerifyDevice } from 'store/Auth/action';
 import { selectAccessToken, selectTask, selectUser } from 'store/Auth/selector';
 import { selectHomeRendered } from 'store/Home/selector';
-import {
-  getCampaign,
-  setMarkItAsRead,
-  setNotifications,
-  setTotalBadge,
-} from 'store/Notification/action';
+import { setMarkItAsRead, setNotifications, setTotalBadge } from 'store/Notification/action';
 import { selectNotification, selectTotalBadge } from 'store/Notification/selector';
 import { selectAppPermissions, selectNavReady } from 'store/Root/selector';
+
+const NotificationTypes = {
+  VERIFY_DEVICE: 'verify-device',
+  REFRESH_TOKEN: 'refresh-token',
+};
 
 function NotificationHandler() {
   const isNavReady = useSelector(selectNavReady);
@@ -74,19 +73,13 @@ function NotificationHandler() {
     message => {
       if (!isNull(accessToken) && isNavReady) {
         const data = convertData(message?.data, ['isRead']);
-        const type = data?.type;
-        const acceptedNotificationType = Object.values(AppConstants.notificationType).some(
-          item => item === type,
-        );
-        if (!acceptedNotificationType) {
+        if (Object.values(NotificationTypes).includes(data?.type)) {
           return;
         }
         if (notificationsRef.current.length === 0) {
           handleSetTimeout();
         }
-        notificationsRef.current?.push({
-          ...data,
-        });
+        notificationsRef.current?.push({ ...data });
       }
     },
     [accessToken, isNavReady, convertData, handleSetTimeout],
@@ -99,35 +92,17 @@ function NotificationHandler() {
           dispatch(addTask(null));
           return;
         }
+
         const data = convertData(message?.data, ['isRead']);
-        const type = data?.type;
-        const acceptedNotificationType = Object.values(AppConstants.notificationType).some(
-          item => item === type,
-        );
-        if (!acceptedNotificationType) {
+        if (Object.values(NotificationTypes).includes(data?.type)) {
           return;
         }
         if (!data?.isRead) {
           dispatch(setMarkItAsRead(data));
         }
-        const notification = getNotificationWithType(data, async _item => {
-          if (
-            _item &&
-            _item.type === AppConstants.notificationType.Campaign &&
-            !isEmpty(_item.campaignId)
-          ) {
-            const campaign = await dispatchResolve(getCampaign({ campaignId: _item.campaignId }));
-            return campaign;
-          }
-          return;
-        });
-        if (notification.isHomeScreenReady) {
-          if (isHomeScreenReady) {
-            notification.onPress();
-            dispatch(addTask(null));
-          }
-        } else {
-          notification.onPress();
+
+        if (isHomeScreenReady) {
+          NavigationServiceLib.navigate(AppScreenID.Notification, { notification: data });
           dispatch(addTask(null));
         }
       } else {
@@ -167,10 +142,10 @@ function NotificationHandler() {
     message => {
       const { data = {} } = message;
       switch (data.type) {
-        case 'verify-device':
+        case NotificationTypes.VERIFY_DEVICE:
           dispatch(onVerifyDevice(message));
           break;
-        case 'refresh-token':
+        case NotificationTypes.REFRESH_TOKEN:
           dispatch(onRefreshDeviceAccessToken(message));
           break;
         default:
@@ -229,24 +204,28 @@ function NotificationHandler() {
       onLocalNotification.current(message);
       handleBadgeIOS(message);
     };
-  }, [dispatch, handleBadgeIOS]);
+  }, [dispatch]);
 
   useEffect(() => {
     onMessageOpened.current = async message => {
       if (isEmpty(message)) {
         return;
       }
+
+      onMessageReceived.current(message);
       handleOpenNotification(message);
       handleTrackingNotification(message, AppConstants.analytics.eventTypes.notificationOpened);
     };
-  }, [dispatchResolve, handleOpenNotification, handleTrackingNotification]);
+  }, [handleOpenNotification, handleTrackingNotification]);
 
   useEffect(() => {
     if (isEmpty(task) || !isHomeScreenReady) {
       return;
     }
+
+    onMessageReceived.current(task);
     handleOpenNotification(task);
-  }, [task, isHomeScreenReady, handleOpenNotification, checkCorrectUser, dispatch]);
+  }, [task, isHomeScreenReady, handleOpenNotification]);
 
   useEffect(() => {
     if (isNavReady && isAppPermissions) {
@@ -258,18 +237,22 @@ function NotificationHandler() {
 
   useEffect(() => {
     if (isNavReady) {
+      // Foreground notification
       const onMessage = NotificationLib.onMessage(async message =>
         onMessageReceivedInForeground.current(message),
       );
+
+      // Background notification
       NotificationLib.setBackgroundMessageHandler(async message =>
         onMessageReceived.current(message),
       );
 
+      // Handles the event when the app is opened by clicking on a notification
       const onNotification = PushNotificationLib.onNotification(notification =>
-        onMessageOpened.current({
-          data: notification.data,
-        }),
+        onMessageOpened.current({ data: notification.data }),
       );
+
+      // Handles the event when the app is opened from a notification after a cold start
       PushNotificationLib.popInitialNotification(async message => {
         onMessageOpened.current(message);
       });

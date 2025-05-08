@@ -18,8 +18,6 @@ import {
 import {
   CAMPAIGN_TRIGGER_BUTTON,
   GET_NOTIFICATIONS,
-  MARK_ALL_AS_READ,
-  MARK_IT_AS_READ,
   VIEW_CAMPAIGN,
 } from 'store/Notification/query';
 import {
@@ -85,24 +83,17 @@ export function* markAllAsReadSaga(action) {
   loading.show();
   const resolver = action.resolver || {};
   try {
-    const variables = {
-      pagination: {
-        page: 1,
-        limit: 1,
-      },
-    };
-    const notificationsResponse = yield SagaLib.mutationCall(MARK_ALL_AS_READ, variables);
-    const totalBadge =
-      notificationsResponse?.data?.me?.notifications?.markAllAsRead?.paginated?.totalBadge;
-    if (totalBadge === 0) {
-      const notifications = yield select(selectNotification);
-      const newNotifications = notifications.map(notification => ({
-        ...notification,
-        isRead: true,
-      }));
-      yield putResolve(updateListNotifications(newNotifications));
-      yield putResolve(setTotalBadge(totalBadge));
-    }
+    const notifications = yield select(selectNotification);
+
+    const updatedNotifications = notifications.map(notification => ({
+      ...notification,
+      isRead: true,
+    }));
+
+    const totalBadge = 0;
+
+    yield putResolve(updateListNotifications(updatedNotifications));
+    yield putResolve(setTotalBadge(totalBadge));
 
     typeof resolver?.resolve === 'function' && resolver?.resolve();
   } catch (error) {
@@ -120,30 +111,27 @@ export function* setMarkItAsReadSaga(action) {
   try {
     const data = action.payload.data;
     const _id = data._id;
-    const variables = {
-      data: {
-        id: _id,
-        isRead: true,
-      },
-    };
-    const notificationResponse = yield SagaLib.mutationCall(MARK_IT_AS_READ, variables);
-    const updatedNotification = notificationResponse?.data?.me?.notifications?.update;
-    if (updatedNotification) {
-      const oldNotifications = yield select(selectNotification);
-      const oldTotalBadge = yield select(selectTotalBadge);
-      const updateNotifications = oldNotifications.map(notification => ({
-        ...notification,
-        isRead: notification._id === _id ? true : notification.isRead,
-      }));
-      const smallestTotalBadge = Math.max(oldTotalBadge - 1, 0);
-      yield putResolve(setNotifications(updateNotifications));
-      yield putResolve(setTotalBadge(smallestTotalBadge));
-      typeof resolver?.resolve === 'function' && resolver?.resolve();
+
+    const oldNotifications = yield select(selectNotification);
+    const oldTotalBadge = yield select(selectTotalBadge);
+
+    const updatedNotifications = oldNotifications.map(notification => ({
+      ...notification,
+      isRead: notification._id === _id ? true : notification.isRead,
+    }));
+
+    const smallestTotalBadge = Math.max(oldTotalBadge - 1, 0);
+
+    yield putResolve(setNotifications(updatedNotifications));
+    yield putResolve(setTotalBadge(smallestTotalBadge));
+
+    if (typeof resolver?.resolve === 'function') {
+      resolver.resolve();
     }
-    typeof resolver?.reject === 'function' && resolver?.reject();
   } catch (error) {
-    typeof resolver?.reject === 'function' && resolver?.reject();
-  } finally {
+    if (typeof resolver?.reject === 'function') {
+      resolver.reject();
+    }
   }
 }
 
