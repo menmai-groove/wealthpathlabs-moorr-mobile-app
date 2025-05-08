@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+import { useRoute } from '@react-navigation/core';
 import { handleDialog } from 'components/basics/CampaignContent';
 import TextField from 'components/basics/TextField';
 import TouchableField from 'components/basics/TouchableField';
@@ -6,26 +8,21 @@ import Header from 'components/layouts/Header';
 import NoDataAvailable from 'components/layouts/NoDataAvailable';
 import { AppConstants, AppScreenID } from 'constant';
 import screenID from 'constant/screenID';
-import { NavigationServiceLib, UtilLib } from 'libs';
+import { GlobalLib, NavigationServiceLib, UtilLib } from 'libs';
 import { useDispatchResolve } from 'libs/hooks';
 import { isEmpty, isNil } from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
 import { useThemedStyle, withBackHandler } from 'providers';
 import withDynamicModuleLoader from 'providers/dynamicModuleLoader/consumer';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, FlatList, Image, RefreshControl, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, RefreshControl, Text, View } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import { compose } from 'redux';
-import {
-  getCampaign,
-  getNotifications,
-  markAllAsRead,
-  setMarkItAsRead,
-} from 'store/Notification/action';
+import { getNotifications, markAllAsRead, setMarkItAsRead } from 'store/Notification/action';
 import getModule from 'store/Notification/module';
 import {
   selectFetchedDataNotification,
@@ -220,6 +217,15 @@ export const getNotificationWithType = (item = {}, callback) => {
       };
       break;
     default:
+      handledData = {
+        icon: 'info-circle',
+        screenID: screenID.Notification,
+        isHomeScreenReady: true,
+        onPress: () => {
+          NavigationServiceLib.navigate(screenID.Notification);
+          typeof callback === 'function' && callback();
+        },
+      };
       break;
   }
   return handledData;
@@ -228,7 +234,15 @@ export const getNotificationWithType = (item = {}, callback) => {
 function NotificationCard({ item }) {
   const styles = useThemedStyle(themedStyles);
   const { t } = useTranslation();
+  const route = useRoute();
+  const { notification: notiData } = route.params || {};
   const dispatchResolve = useDispatchResolve();
+
+  useEffect(() => {
+    if (notiData) {
+      onPress(notiData);
+    }
+  }, [notiData]);
 
   const dateText = useMemo(() => {
     const a = moment(item?.createdDate).calendar(null, {
@@ -252,17 +266,21 @@ function NotificationCard({ item }) {
       if (!notification?.isRead) {
         dispatchResolve(setMarkItAsRead(notification));
       }
-      getNotificationWithType(notification, async _item => {
-        if (
-          _item &&
-          _item.type === AppConstants.notificationType.Campaign &&
-          !isEmpty(_item.campaignId)
-        ) {
-          const campaign = await dispatchResolve(getCampaign({ campaignId: _item.campaignId }));
-          return campaign;
-        }
-        return null;
-      }).onPress();
+
+      const modal = GlobalLib.CustomModal.get();
+      const hideModal = () => modal.hide();
+      return modal.show({
+        body: (
+          <View style={{ gap: 10 }}>
+            <Image source={{ uri: notification.icon }} resizeMode="contain" style={styles.image} />
+            <Text style={{ textAlign: 'center' }}>
+              <TextField type="heading-4">{notification?.title}</TextField>
+            </Text>
+            <Text style={{ fontSize: 12, fontStyle: 'italic' }}>{notification?.body}</Text>
+          </View>
+        ),
+        onBackdropPress: () => hideModal(),
+      });
     },
     [dispatchResolve],
   );
@@ -284,10 +302,13 @@ function NotificationCard({ item }) {
           ) : null}
         </View>
         <View style={styles.cardContent}>
-          {!isNil(item?.body) ? (
+          {!isNil(item?.title) ? (
             <View>
-              <TextField type="heading-4">{item?.body}</TextField>
+              <TextField type="heading-4">{item?.title}</TextField>
             </View>
+          ) : null}
+          {!isNil(item?.body) ? (
+            <Text style={{ fontSize: 12, fontStyle: 'italic' }}>{item?.body}</Text>
           ) : null}
           {!isNil(dateText) ? (
             <View style={styles.cardTimeContainer}>
