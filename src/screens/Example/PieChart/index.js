@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-native/no-color-literals */
+import CheckBox from 'components/basics/CheckBox';
 import * as d3Shape from 'd3-shape';
 import React, { useMemo, useState } from 'react';
-import { Dimensions, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -17,39 +18,36 @@ const defaultColors = [
   '#E91E63',
 ];
 
-const sampleDataSets = [
-  [
-    { label: 'Apple', value: 40 },
-    { label: 'Banana', value: 30 },
-    { label: 'Orange', value: 20 },
-    { label: 'Grape', value: 10 },
-  ],
-  [
-    { label: 'Red', value: 25 },
-    { label: 'Blue', value: 25 },
-    { label: 'Green', value: 25 },
-    { label: 'Yellow', value: 25 },
-  ],
-];
-
-const filterOptions = [
-  { label: 'Fruits', value: 0 },
-  { label: 'Colors', value: 1 },
+const fruitsData = [
+  { label: 'Apple', value: 40 },
+  { label: 'Banana', value: 30 },
+  { label: 'Orange', value: 20 },
+  { label: 'Grape', value: 10 },
+  { label: 'Pineapple', value: 25 },
+  { label: 'Mango', value: 35 },
+  { label: 'Strawberry', value: 15 },
+  { label: 'Blueberry', value: 20 },
 ];
 
 function PieChart({ singleTooltip = true }) {
-  const [filter, setFilter] = useState(0);
-  const [tooltips, setTooltips] = useState([]); // [{idx, x, y}]
+  const [selectedItems, setSelectedItems] = useState(fruitsData.map((_, idx) => idx));
   const [showDropdown, setShowDropdown] = useState(false);
+  const [tooltips, setTooltips] = useState([]); // [{idx, x, y}]
 
+  // Filtered data based on selected items
   const data = useMemo(
     () =>
-      sampleDataSets[filter].map((d, i) => ({
-        ...d,
-        color: defaultColors[i % defaultColors.length],
-      })),
-    [filter],
+      fruitsData
+        .filter((_, idx) => selectedItems.includes(idx))
+        .map((d, i) => ({
+          ...d,
+          color: defaultColors[i % defaultColors.length],
+        })),
+    [selectedItems],
   );
+
+  // Tính tổng giá trị của các mục được chọn
+  const totalValue = useMemo(() => data.reduce((sum, item) => sum + item.value, 0), [data]);
 
   const chartSize = Math.min(screenWidth - 32, 320);
   const outerRadius = chartSize / 2 - 10;
@@ -106,8 +104,28 @@ function PieChart({ singleTooltip = true }) {
     }
   };
 
+  const toggleItemSelection = idx => {
+    setSelectedItems(prev =>
+      prev.includes(idx) ? prev.filter(item => item !== idx) : [...prev, idx],
+    );
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedItems.length === fruitsData.length) {
+      setSelectedItems([]); // Deselect all
+    } else {
+      setSelectedItems(fruitsData.map((_, idx) => idx)); // Select all
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 40 }}>
+      {/* Tổng giá trị */}
+      <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginBottom: 16 }}>
+        Total: {totalValue}
+      </Text>
+
+      {/* Filter Dropdown */}
       <TouchableOpacity
         style={{
           margin: 16,
@@ -120,7 +138,7 @@ function PieChart({ singleTooltip = true }) {
           width: 160,
         }}
         onPress={() => setShowDropdown(true)}>
-        <Text style={{ flex: 1 }}>{filterOptions[filter].label}</Text>
+        <Text style={{ flex: 1 }}>All</Text>
         <Text style={{ fontSize: 18 }}>▼</Text>
       </TouchableOpacity>
       <Modal visible={showDropdown} transparent animationType="fade">
@@ -136,24 +154,39 @@ function PieChart({ singleTooltip = true }) {
               shadowColor: '#000',
               shadowOpacity: 0.1,
               shadowRadius: 8,
-              width: 160,
+              width: 200,
             }}>
-            {filterOptions.map(opt => (
-              <TouchableOpacity
-                key={opt.value}
-                style={{ padding: 14 }}
-                onPress={() => {
-                  setFilter(opt.value);
-                  setShowDropdown(false);
-                  setTooltips([]);
-                }}>
-                <Text>{opt.label}</Text>
-              </TouchableOpacity>
-            ))}
+            <TouchableOpacity
+              style={{
+                padding: 14,
+                backgroundColor: selectedItems.length === fruitsData.length ? '#e0e0e0' : '#fff',
+              }}
+              onPress={toggleSelectAll}>
+              <Text>
+                {selectedItems.length === fruitsData.length ? 'Deselect All' : 'Select All'}
+              </Text>
+            </TouchableOpacity>
+            <FlatList
+              data={fruitsData}
+              keyExtractor={(_, idx) => idx.toString()}
+              renderItem={({ item, index }) => (
+                <CheckBox
+                  label={item.label}
+                  value={selectedItems.includes(index)}
+                  onChange={() => toggleItemSelection(index)}
+                  containerStyle={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 14,
+                  }}
+                />
+              )}
+            />
           </View>
         </TouchableOpacity>
       </Modal>
 
+      {/* Pie Chart */}
       <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 24, flex: 1 }}>
         <Svg width={chartSize} height={chartSize}>
           <G x={chartSize / 2} y={chartSize / 2}>
@@ -189,7 +222,9 @@ function PieChart({ singleTooltip = true }) {
             <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>
               {data[idx].label}
             </Text>
-            <Text style={{ color: '#fff', fontSize: 14 }}>{data[idx].value}</Text>
+            <Text style={{ color: '#fff', fontSize: 14 }}>
+              {data[idx].value} ({((data[idx].value / totalValue) * 100).toFixed(1)}%)
+            </Text>
             <TouchableOpacity
               style={{ position: 'absolute', top: 4, right: 8 }}
               onPress={() => setTooltips(tl => tl.filter(t => t.idx !== idx))}>
