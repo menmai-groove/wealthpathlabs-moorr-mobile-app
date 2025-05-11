@@ -61,4 +61,6 @@ export default {
   AssetPosition: 'asset_position',
   DebtPosition: 'debt_position',
   Webview: 'webview',
+
+  Example: 'example',
 };
