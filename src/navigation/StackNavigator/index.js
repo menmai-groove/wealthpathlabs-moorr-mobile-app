@@ -97,7 +97,7 @@ function StackNavigator() {
   }, []);
   return (
     <RootStack.Navigator
-      initialRouteName={AppScreenID.Launch}
+      initialRouteName={AppScreenID.Example}
       screenOptions={{
         headerShown: false,
         drawerLockMode: 'locked-closed',

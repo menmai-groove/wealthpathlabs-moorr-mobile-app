@@ -4,11 +4,8 @@
  *
  */
 
-import { MenuButton, MenuModal } from 'components/layouts/MenuLayout';
 import { AppScreenID } from 'constant';
-import { GlobalLib } from 'libs';
 import MainStackNavigator from 'navigation/MainStackNavigator';
-import MenuProvider from 'providers/menu/provider';
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 import AddNewAsset from 'screens/AddAsset';
@@ -23,6 +20,7 @@ import DebtPositionScreen from 'screens/DebtPosition';
 import DirectPaymentJar from 'screens/DirectPaymentJar';
 import EditAsset from 'screens/EditAsset';
 import EditPersonalGoal from 'screens/EditPersonalGoal';
+import Example from 'screens/Example';
 import AddExpense from 'screens/Expense/AddExpense';
 import EditExpense from 'screens/Expense/EditExpense';
 import ExpenseDashboard from 'screens/ExpenseDashboard';
@@ -212,6 +210,10 @@ function Entry() {
         name: AppScreenID.Webview,
         component: WebviewScreen,
       },
+      {
+        name: AppScreenID.Example,
+        component: Example,
+      },
     ];
     if (__DEV__) {
       data.push(
@@ -233,17 +235,17 @@ function Entry() {
       <MainStackNavigator
         screens={screens}
         config={{
-          initialRouteName: AppScreenID.Home,
+          initialRouteName: AppScreenID.Example,
         }}
       />
-      <MenuProvider>
+      {/* <MenuProvider>
         <MenuModal
           ref={ref => {
             GlobalLib.MenuModal.set(ref);
           }}
         />
         <MenuButton />
-      </MenuProvider>
+      </MenuProvider> */}
     </View>
   );
 }
