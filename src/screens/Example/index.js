@@ -1,23 +1,28 @@
-/* eslint-disable react-native/no-inline-styles */
+import CustomPieChart from 'components/basics/CustomPieChart';
 import React from 'react';
-import { Text, View } from 'react-native';
-
-import PieChart from './PieChart';
-
-const data = [
-  { label: 'A', value: 40, color: '#FF6384' },
-  { label: 'B', value: 30, color: '#36A2EB' },
-  { label: 'C', value: 20, color: '#FFCE56' },
-  { label: 'D', value: 10, color: '#4BC0C0' },
-];
+import { StyleSheet, Text, View } from 'react-native';
+import { FRUITS_DATA } from 'screens/Example/data';
 
 const Example = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Example</Text>
-      <PieChart singleTooltip={true} />
+    <View style={styles.container}>
+      <Text style={styles.title}>Fruits Pie Chart</Text>
+      <CustomPieChart chartData={FRUITS_DATA} />
     </View>
   );
 };
 
 export default Example;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+});
